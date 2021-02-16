@@ -1,23 +1,46 @@
 package restaurantapp.server.models.booking;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import restaurantapp.server.models.receipt.Receipt;
-import restaurantapp.server.models.user.Customer;
+import restaurantapp.server.models.Customer;
 
+import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.TemporalAmount;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Entity
+@Table(name = "bookings")
 public class Booking {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
     private LocalDate date;
+
+    @Column
     private LocalTime time;
+
+    @Column
     private Status status;
+
+    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"booking"})
     private Receipt receipt;
+
+    @Column(name = "num_of_people")
     private Integer numOfPeople;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = true)
+    @JsonIgnoreProperties({"bookings"})
     private Customer customer;
+
+    @Column(name = "table_num")
     private Integer tableNum;
 
     public Booking() { }
@@ -26,11 +49,12 @@ public class Booking {
         this.date = date;
         this.time = time;
         this.status = Status.PENDING;
-        this.receipt = null;
         this.numOfPeople = numOfPeople;
         this.customer = customer;
         this.tableNum = tableNum;
     }
+
+
 
     public Integer getTableNum() {
         return tableNum;
@@ -69,6 +93,7 @@ public class Booking {
     }
 
     public void setReceipt(Receipt receipt) {
+        this.status = Status.DONE;
         this.receipt = receipt;
     }
 
@@ -114,4 +139,11 @@ public class Booking {
         return isTimeSlotAvailable(incomingBooking.getTime(), overlappingDayAndTableNumBookings);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

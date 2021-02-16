@@ -2,7 +2,7 @@ package restaurantapp.server.models.booking;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import restaurantapp.server.models.user.Customer;
+import restaurantapp.server.models.Customer;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

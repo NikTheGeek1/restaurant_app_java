@@ -1,13 +1,33 @@
 package restaurantapp.server.models.receipt;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import restaurantapp.server.models.booking.Booking;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "receipts")
 public class Receipt {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "booking_id", nullable = false)
+    @JsonIgnoreProperties({"receipt"})
     private Booking booking;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "orders",
+            joinColumns=@JoinColumn(name="receipt_id")
+    )
+    @Column(name = "order_items")
     private List<MenuItem> order;
+
+    @Column(name = "total_cost")
     private Double totalCost;
 
 
@@ -41,6 +61,14 @@ public class Receipt {
 
     public void setTotalCost(Double totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     private Double calculateTotalCost() {
