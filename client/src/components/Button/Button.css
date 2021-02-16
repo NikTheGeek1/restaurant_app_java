@@ -1,0 +1,16 @@
+.simple-btn {
+    display: inline-block;
+    cursor: pointer;
+    padding: .5rem 1rem; 
+    border-radius: .5rem;
+    border: solid 2px;
+    border-color: var(--colour-gray-2);
+    color: var(--colour-white);
+    font-size: var(--large-font-size);
+    transition: all .2s;
+}
+
+
+.simple-btn:hover {
+    border-color: var(--colour-secondary);
+}

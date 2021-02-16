@@ -1,5 +1,37 @@
-* {
-    padding: 0;
-    margin: 0;
+/* VARIABLES */
+:root {
+    --colour-quaternary: #44beac;
+    --colour-primary: #a6b1eb;
+    --colour-tertiary: #99C3D4;
+    --colour-secondary: #e27f58;
+    --colour-gray-1: #333;
+    --colour-gray-2: #6e7376;
+    --colour-gray-3: #eee;
+    --colour-white: #fff;
+    --largest-font-size: 2.2rem;
+    --larger-font-size: 2rem;
+    --large-font-size: 1.8rem;
+    --primary-font-size: 1.6rem;
+    --small-font-size: 1.4rem;
+    --smaller-font-size: 1.2rem;
+    --smallest-font-size: 1rem;
+  }
+
+  *,
+  *::after,
+  *::before {
+      margin: 0;
+      padding: 0;
+      box-sizing: inherit;
+  }
+
+
+  html {
+    /* This defines what 1rem is: 1rem = 10px; 10/16 = 62.5 */
+    font-size: 62.5%; 
 }
 
+body {
+    box-sizing: border-box;
+    font-size: var(--primary-font-size);
+}

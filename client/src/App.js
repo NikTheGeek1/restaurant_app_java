@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react';
 import './App.css';
-import RestaurantCanvas from './components/RestaurantCanvas/RestaurantCanvas';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import LandingPage from './components/LandingPage/LandingPage';
 
 function App() {
-  const [tableData, setTableData] = useState([]);
 
-  useEffect(() => {
-      const dummyTableData = [
-        { available: Math.random() > 0.5 },
-        { available: Math.random() > 0.5 },
-        { available: Math.random() > 0.5 },
-        { available: Math.random() > 0.5 },
-        { available: Math.random() > 0.5 },
-        { available: Math.random() > 0.5 },
-        { available: Math.random() > 0.5 },
-        { available: Math.random() > 0.5 }
-      ];
-      setTableData(dummyTableData);
-
-  }, []);
   
+
   return (
-    <main className="App">
-      <RestaurantCanvas tableData={tableData} />
-    </main>
+    <Router>
+      <Switch>
+        <Route path="/" exact>
+          <LandingPage />
+          {/* <RestaurantCanvas  tableData={[
+      { available: Math.random() > 0.5 },
+      { available: Math.random() > 0.5 },
+      { available: Math.random() > 0.5 },
+      { available: Math.random() > 0.5 },
+      { available: Math.random() > 0.5 },
+      { available: Math.random() > 0.5 },
+      { available: Math.random() > 0.5 },
+      { available: Math.random() > 0.5 }
+    ]}/> */}
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

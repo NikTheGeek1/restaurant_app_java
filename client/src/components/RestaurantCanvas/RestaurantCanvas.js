@@ -12,7 +12,7 @@ import chairUp from '../../assets/chair_wood_family_up [1x1].png';
 import chairDown from '../../assets/chair_wood_family_down [1x1].png';
 
 let canvas;
-const RestaurantCanvas = ({ tableData }) => {
+const RestaurantCanvas = ({ tableData, isStatic }) => {
     const [screenDims, setScreenDims] = useState({ w: window.innerWidth, h: window.innerHeight });
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [portableModalPosition, setPortableModalPosition] = useState({});
@@ -36,6 +36,16 @@ const RestaurantCanvas = ({ tableData }) => {
     }, []);
 
     useEffect(() => {
+        if (!tableData) {
+            tableData = [{ available: true },
+                { available: true },
+                { available: true },
+                { available: false },
+                { available: true },
+                { available: false },
+                { available: true },
+                { available: true } ]
+        }
         canvas.availableTables = tableData.map(table => table.available);
         canvas.drawAll();
     }, [tableData])
@@ -83,7 +93,8 @@ const RestaurantCanvas = ({ tableData }) => {
         <>
             <div style={{ position: "absolute", top: 0, left: 0, zIndex: 1, color: "white", fontSize: 40 }}>{mousePos.x}, {mousePos.y}</div>
             {!!Object.keys(portableModalPosition).length && <PortableModal position={{ top: portableModalPosition.y, left: portableModalPosition.x }} />}
-            <canvas ref={canvasRef} className="restaurant-canvas" height={screenDims.h} width={screenDims.w} />
+            {isStatic && <div className="static-overlay-canvas"></div>}
+            <canvas ref={canvasRef} className={isStatic ? "restaurant-canvas static-canvas": "restaurant-canvas"} height={screenDims.h} width={screenDims.w} />
         </>
     );
 };

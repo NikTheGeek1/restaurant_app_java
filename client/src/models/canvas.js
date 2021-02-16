@@ -17,14 +17,14 @@ class Canvas {
         this.CHAIR_WIDTH = 0;
         this.CHAIR_HEIGHT = 0;
         this.TABLES_POSITIONS = [
-            { x: this.screenCenter.x - 160, y: this.screenCenter.y - 150 },
+            { x: this.screenCenter.x - 180, y: this.screenCenter.y - 150 },
             { x: this.screenCenter.x - 30, y: this.screenCenter.y - 150 },
-            { x: this.screenCenter.x + 100, y: this.screenCenter.y - 150 },
-            { x: this.screenCenter.x + 100, y: this.screenCenter.y - 30 },
-            { x: this.screenCenter.x + 100, y: this.screenCenter.y + 100 },
-            { x: this.screenCenter.x - 30, y: this.screenCenter.y + 100 },
-            { x: this.screenCenter.x - 160, y: this.screenCenter.y + 100 },
-            { x: this.screenCenter.x - 160, y: this.screenCenter.y - 30 }
+            { x: this.screenCenter.x + 120, y: this.screenCenter.y - 150 },
+            { x: this.screenCenter.x + 120, y: this.screenCenter.y - 30 },
+            { x: this.screenCenter.x + 120, y: this.screenCenter.y + 95 },
+            { x: this.screenCenter.x - 30, y: this.screenCenter.y + 95 },
+            { x: this.screenCenter.x - 180, y: this.screenCenter.y + 95 },
+            { x: this.screenCenter.x - 180, y: this.screenCenter.y - 30 }
         ];
         this.CHAIRS_POSITIONS = {
             Left: this.TABLES_POSITIONS.map((_, idx) => {
