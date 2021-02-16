@@ -1,0 +1,28 @@
+
+
+.customer-box {
+    background-image: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5));
+    height: 50%;
+    grid-area: customer-box;
+    display: grid;
+    grid-template-areas: "title title" "btn-register btn-login";
+    color: var(--colour-white);
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    align-self: center;
+}
+
+
+.customer-title-landing-page {
+    grid-area: title;
+}
+
+.customer-register-btn {
+    grid-area: btn-register;
+}
+
+.customer-login-btn {
+    grid-area: btn-login;
+    justify-self: end;
+}
+

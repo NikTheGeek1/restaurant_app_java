@@ -3,7 +3,7 @@ import './Button.css';
 const Button = ({ title, onClickHandler }) => {
 
     return (
-        <div className="simple-btn">{title}</div>
+        <div className="simple-btn" onClick={onClickHandler}>{title}</div>
     );
 };
 
