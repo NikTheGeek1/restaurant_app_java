@@ -85,15 +85,6 @@ class BookingTest {
         assertTrue(isAvailable);
     }
 
-//    @Test
-    void incomingBookingTimeOffsetOnPreExistingBookingOffset_ExpectFalse() {
-        // booked time slots 4-6 and 8-10
-        LocalTime incomingBookingOffset = LocalTime.of(4, 0);
-        Booking incomingBooking = new Booking(LocalDate.of(2021, 2, 16), incomingBookingOffset, 4, customer3, 4);
-        boolean isAvailable = Booking.isBookingAvailable(incomingBooking, bookings);
-        assertFalse(isAvailable);
-    }
-
     @Test
     void incomingBookingTimeOffsetBetweenPreexisistingBooking1_ExpectFalse() {
         // booked time slots 4-6 and 8-10
@@ -146,5 +137,13 @@ class BookingTest {
         Booking incomingBooking = new Booking(LocalDate.of(2021, 2, 16), incomingBookingOffset, 4, customer3, 4);
         boolean isAvailable = Booking.isBookingAvailable(incomingBooking, bookings);
         assertFalse(isAvailable);
+    }
+
+    @Test
+    void incomingBookingEmptyPreexisingBookings_ExpectTrue() {
+        LocalTime incomingBookingOffset = LocalTime.of(8, 0);
+        Booking incomingBooking = new Booking(LocalDate.of(2021, 2, 16), incomingBookingOffset, 4, customer3, 4);
+        boolean isAvailable = Booking.isBookingAvailable(incomingBooking, Arrays.asList());
+        assertTrue(isAvailable);
     }
 }

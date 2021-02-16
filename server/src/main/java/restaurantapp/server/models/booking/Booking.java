@@ -93,7 +93,9 @@ public class Booking {
     }
 
     public void setReceipt(Receipt receipt) {
-        this.status = Status.DONE;
+        if (receipt != null) {
+            this.status = Status.DONE;
+        }
         this.receipt = receipt;
     }
 
@@ -137,6 +139,12 @@ public class Booking {
                 .filter(booking -> booking.getStatus() == Status.PENDING && booking.getDate().isEqual(incomingBooking.getDate()) && booking.getTableNum() == incomingBooking.getTableNum())
                 .collect(Collectors.toList());
         return isTimeSlotAvailable(incomingBooking.getTime(), overlappingDayAndTableNumBookings);
+    }
+
+    public static List<Booking> removeBookingById(Booking bookingToBeRemoved, List<Booking> bookings) {
+        return bookings.stream()
+                .filter(booking -> booking.getId() != bookingToBeRemoved.getId())
+                .collect(Collectors.toList());
     }
 
     public Long getId() {

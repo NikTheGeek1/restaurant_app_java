@@ -1,6 +1,8 @@
 package restaurantapp.server.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import restaurantapp.server.models.booking.Booking;
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ public class Customer {
     private Long id;
 
     @OneToMany(mappedBy = "customer")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties({"customer"})
     private List<Booking> bookings;
 
