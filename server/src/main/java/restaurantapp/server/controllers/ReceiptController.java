@@ -34,6 +34,6 @@ public class ReceiptController {
         updatedBooking.setReceipt(receipt);
         bookingRepository.updateById(updatedBooking.getDate(), updatedBooking.getTime(), updatedBooking.getNumOfPeople(), updatedBooking.getTableNum(), updatedBooking.getStatus(), updatedBooking.getId());
         receiptRepository.save(receipt);
-        return new ResponseEntity<>(receipt, HttpStatus.OK);
+        return new ResponseEntity<>(receipt, HttpStatus.CREATED);
     }
 }

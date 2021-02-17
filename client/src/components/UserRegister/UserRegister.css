@@ -1,0 +1,17 @@
+.user-register-form-container {
+    display: grid;
+}
+
+.form-btn-container {
+    justify-self: center;
+    margin-top: 1.5rem;
+}
+
+.user-registration-box-title {
+    justify-self: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-error-message {
+    color: var(--colour-secondary);
+}

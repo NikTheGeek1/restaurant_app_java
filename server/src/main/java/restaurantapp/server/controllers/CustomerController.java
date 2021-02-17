@@ -8,6 +8,7 @@ import restaurantapp.server.models.Customer;
 import restaurantapp.server.repositories.CustomerRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CustomerController {
@@ -21,9 +22,27 @@ public class CustomerController {
     }
 
     @PostMapping("/customers")
-    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
+        List<Customer> existingCustomer = customerRepository.findByEmail(customer.getEmail());
+        if (!existingCustomer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("Email already exists.", HttpStatus.BAD_REQUEST));
+        }
         customerRepository.save(customer);
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+        return new ResponseEntity<>(customer, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/customers/login")
+    public ResponseEntity<?> loginCustomer(@RequestParam(name = "email") String email,
+                                           @RequestParam(name = "password") String password) {
+        List<Customer> existingCustomer = customerRepository.findByEmail(email);
+        if (existingCustomer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("Email does not exist.", HttpStatus.BAD_REQUEST));
+        }
+        Customer customer = existingCustomer.get(0);
+        if (!customer.getPassword().equals(password)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("Wrong password.", HttpStatus.BAD_REQUEST));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(customer);
     }
 
     @DeleteMapping("/customers")

@@ -7,9 +7,10 @@ const FormInput = ({ onChange, placeholder, label, type }) => {
             <input
                 type={type}
                 className="form-input"
-                onChange={onChange}
+                onChange={e => onChange(e.target.value)}
                 placeholder={placeholder}
                 id={label}
+                required
             />
             <label
                 className="form-label"

@@ -25,7 +25,7 @@ public class BookingController {
         List<Booking> existingBookings = bookingRepository.findAll();
         if (Booking.isBookingAvailable(booking, existingBookings)) {
             bookingRepository.save(booking);
-            return new ResponseEntity<>(booking, HttpStatus.OK);
+            return new ResponseEntity<>(booking, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(booking, HttpStatus.BAD_REQUEST);
     }

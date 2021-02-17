@@ -1,4 +1,4 @@
-import { LOG_USER_IN, LOG_USER_OUT } from '../actions/user-credentials';
+import { LOG_USER_IN, LOG_USER_OUT } from '../actions/user-details';
 const initialState = {
     isLoggedIn: false,
     userObj: {}
@@ -7,10 +7,10 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case LOG_USER_IN:
+            return { ...state, userObj: action.customer, isLoggedIn: true };
 
-            return { ...state, isLoggedIn: true };
         case LOG_USER_OUT:
-            return { ...state, isLoggedIn: false };
+            return { ...state, userObj: {}, isLoggedIn: false };
         default:
             return state;
     }

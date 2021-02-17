@@ -3,6 +3,7 @@ import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import { useState } from 'react';
 import UserRegister from '../UserRegister/UserRegister';
+import UserLogIn from '../UserLogin/UserLogin';
 
 const CustomerBox = () => {
 
@@ -21,7 +22,7 @@ const CustomerBox = () => {
             <div className="customer-login-btn">
                 <Button title="Login" onClickHandler={setShowUserRegisterModal.bind(true)}/>
                 <Modal showModal={showUserRegisterModal} hideModalHandler={setShowUserRegisterModal}>
-                    <div>hello</div>
+                    <UserLogIn />
                 </Modal>
             </div>
         </div>
