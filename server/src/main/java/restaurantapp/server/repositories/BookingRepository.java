@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import restaurantapp.server.models.booking.Booking;
 import restaurantapp.server.models.booking.Status;
 
+import java.awt.print.Book;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -18,6 +19,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByCustomerEmail(String email);
     List<Booking> findByCustomerId(Long id);
     List<Booking> findByDate(LocalDate date);
+    List<Booking> findByDateAndStatus(LocalDate date, Status status);
+
 
     @Modifying
     @Transactional

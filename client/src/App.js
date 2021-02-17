@@ -5,7 +5,10 @@ import { isCookie, getCookie, USER_LOGGED_IN, ADMIN_LOGGED_IN } from './local-st
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { logUserIn } from './store/actions/user-details';
-import RestaurantCanvas from './components/RestaurantCanvas/RestaurantCanvas';
+import { logAdminIn } from './store/actions/admin-details';
+
+import AdminInterface from './components/AdminInterface/AdminInterface';
+import CustomerInterface from './components/CustomerInterface/CustomerInterface';
 
 function App() {
   const dispatch = useDispatch();
@@ -20,25 +23,26 @@ function App() {
     }
     if (isCookie(ADMIN_LOGGED_IN)) {
       const admin = getCookie(ADMIN_LOGGED_IN);
-      // dispatch(logAdminIn(admin));
+      dispatch(logAdminIn(admin));
     }
   }, []);
+
+  let indexPageComponentJSX = <LandingPage />;
+  if (userLoggedIn && adminLoggedIn) {
+    throw new Error("Both customer and admin are loggged in, do something");
+  }
+  if (userLoggedIn) {
+    indexPageComponentJSX = <CustomerInterface />;
+  }
+  if (adminLoggedIn) {
+    indexPageComponentJSX = <AdminInterface />;
+  }
 
   return (
     <Router>
       <Switch>
         <Route path="/" exact>
-          {!userLoggedIn && !adminLoggedIn ? <LandingPage /> :
-            <RestaurantCanvas tableData={[
-              { available: Math.random() > 0.5 },
-              { available: Math.random() > 0.5 },
-              { available: Math.random() > 0.5 },
-              { available: Math.random() > 0.5 },
-              { available: Math.random() > 0.5 },
-              { available: Math.random() > 0.5 },
-              { available: Math.random() > 0.5 },
-              { available: Math.random() > 0.5 }
-            ]} />}
+          {indexPageComponentJSX}
         </Route>
       </Switch>
     </Router>

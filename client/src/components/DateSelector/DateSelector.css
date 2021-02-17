@@ -1,0 +1,36 @@
+.date-selector-container {
+    position: absolute;
+    top: var(--canvas-Y-end-of-space);
+    left: 250px;
+}
+
+.horizontal-slider {
+    cursor: pointer;
+    background-color: red;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.example-thumb {
+    cursor: pointer;
+    width: 60px;
+    height: 20px;
+    margin-top: -10px;
+    background-color: var(--colour-primary);
+    text-align: center;
+    border-radius: 10px;
+}
+
+
+.example-track {
+    cursor: pointer;
+    background-color: var(--colour-gray-3);
+    height: 2px;
+}
+
+.example-mark {
+    width: 10px;
+    height: 10px;
+    background-color: var(--colour-secondary);
+    margin-top: -5px;
+}

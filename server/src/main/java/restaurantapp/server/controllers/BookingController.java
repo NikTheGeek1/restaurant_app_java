@@ -1,12 +1,15 @@
 package restaurantapp.server.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import restaurantapp.server.models.booking.Booking;
+import restaurantapp.server.models.booking.Status;
 import restaurantapp.server.repositories.BookingRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -16,7 +19,20 @@ public class BookingController {
     BookingRepository bookingRepository;
 
     @GetMapping("/bookings")
-    public ResponseEntity<List<Booking>> bookings() {
+    public ResponseEntity<List<Booking>> bookings(
+            @RequestParam(name = "date", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(name = "status", required = false) String bookingStatus
+    ) {
+        if (date != null && bookingStatus != null && bookingStatus.equals("pending")) {
+            return new ResponseEntity<>(bookingRepository.findByDateAndStatus(date, Status.PENDING), HttpStatus.OK);
+        }
+        if (date != null && bookingStatus != null && bookingStatus.equals("done")) {
+            return new ResponseEntity<>(bookingRepository.findByDateAndStatus(date, Status.DONE), HttpStatus.OK);
+        }
+        if (date != null) {
+            return new ResponseEntity<>(bookingRepository.findByDate(date), HttpStatus.OK);
+        }
         return new ResponseEntity<>(bookingRepository.findAll(), HttpStatus.OK);
     }
 
@@ -51,6 +67,8 @@ public class BookingController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
 
 
 }

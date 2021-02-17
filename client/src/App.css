@@ -15,6 +15,12 @@
     --small-font-size: 1.4rem;
     --smaller-font-size: 1.2rem;
     --smallest-font-size: 1rem;
+    --canvas-start-top: 100px;
+    --canvas-start-left: 100px;
+    --canvas-space-width: 840px;
+    --canvas-space-height: 500px;
+    --canvas-Y-end-of-space: calc(var(--canvas-start-top) + var(--canvas-space-height));
+    --canvas-X-end-of-space: calc(var(--canvas-start-left) + var(--canvas-space-width));
   }
 
   *,

@@ -7,39 +7,22 @@ class Canvas {
         this.imgsToLoadCount = imgsArray.length;
         this.mousePos = { x: 0, y: 0 };
         this.screenCenter = { x: sceenDims.w / 2, y: sceenDims.h / 2 };
-        this.availableTables = [true, true, false, true, true, false, false, true];
+        this.SPACE_CENTER = 0;
+        this.bookings = [true, true, false, true, true, false, false, true];
         // CONSTANT PROPS
         this.WALL_COLOUR = "#aaa";
+        this.X_POSITION_ANCOR = 100; // 100 pixels from the left
+        this.Y_POSITION_ANCOR = 100; // 100 pixels from the top
         this.USELESS_CLICK = "USELESS_CLICK";
         this.TABLE_CLICK = "TABLE_CLICK";
         this.TABLE_WIDTH = 0;
         this.TABLE_HEIGHT = 0;
         this.CHAIR_WIDTH = 0;
         this.CHAIR_HEIGHT = 0;
-        this.TABLES_POSITIONS = [
-            { x: this.screenCenter.x - 180, y: this.screenCenter.y - 150 },
-            { x: this.screenCenter.x - 30, y: this.screenCenter.y - 150 },
-            { x: this.screenCenter.x + 120, y: this.screenCenter.y - 150 },
-            { x: this.screenCenter.x + 120, y: this.screenCenter.y - 30 },
-            { x: this.screenCenter.x + 120, y: this.screenCenter.y + 95 },
-            { x: this.screenCenter.x - 30, y: this.screenCenter.y + 95 },
-            { x: this.screenCenter.x - 180, y: this.screenCenter.y + 95 },
-            { x: this.screenCenter.x - 180, y: this.screenCenter.y - 30 }
-        ];
-        this.CHAIRS_POSITIONS = {
-            Left: this.TABLES_POSITIONS.map((_, idx) => {
-                return { x: this.TABLES_POSITIONS[idx].x + 45, y: this.TABLES_POSITIONS[idx].y + 7 };
-            }),
-            Right: this.TABLES_POSITIONS.map((_, idx) => {
-                return { x: this.TABLES_POSITIONS[idx].x - 13, y: this.TABLES_POSITIONS[idx].y + 7 };
-            }),
-            Up: this.TABLES_POSITIONS.map((_, idx) => {
-                return { x: this.TABLES_POSITIONS[idx].x + 15, y: this.TABLES_POSITIONS[idx].y + 45 };
-            }),
-            Down: this.TABLES_POSITIONS.map((_, idx) => {
-                return { x: this.TABLES_POSITIONS[idx].x + 15, y: this.TABLES_POSITIONS[idx].y - 18 };
-            }),
-        };
+        this.SPACE_WIDTH = 0;
+        this.SPACE_HEIGHT = 0;
+        this.TABLES_POSITIONS = [];
+        this.CHAIRS_POSITIONS = [];
 
     }
 
@@ -56,13 +39,13 @@ class Canvas {
     _drawSpace() {
         const IMG_NAME = "space";
         const img = this._findImageToDraw(IMG_NAME).img;
-        this.canvasContext.drawImage(img, this.screenCenter.x - img.width / 2, this.screenCenter.y - img.height / 2);
+        this.canvasContext.drawImage(img, this.X_POSITION_ANCOR, this.X_POSITION_ANCOR);
     }
 
     _drawFuncyBlueRug() {
         const IMG_NAME = "fancyBlueRug";
         const img = this._findImageToDraw(IMG_NAME).img;
-        this.canvasContext.drawImage(img, this.screenCenter.x - img.width / 2, this.screenCenter.y - img.height / 2);
+        this.canvasContext.drawImage(img, this.SPACE_CENTER.x - img.width / 2, this.SPACE_CENTER.y - img.height / 2);
     }
 
     _drawTableOverlay(tableX, tableY) {
@@ -70,19 +53,25 @@ class Canvas {
         this.canvasContext.fillRect(tableX + 2, tableY, this.TABLE_WIDTH - 4, this.TABLE_HEIGHT - 10);
     }
    
+    _hasThisTableBookin(tableNum) {
+        return this.bookings.filter(booking => booking.tableNum === tableNum);
+    }
 
     _drawTables() {
         const availabeTable = this._findImageToDraw("availableTable").img;
         const reservedTable = this._findImageToDraw("reservedTable").img;
+        this.canvasContext.font = "30px Arial";
         for (let tablePosIdx = 0; tablePosIdx < this.TABLES_POSITIONS.length; tablePosIdx++) {
-            const tablePos = this.TABLES_POSITIONS[tablePosIdx]
-            if (this.availableTables[tablePosIdx]) {
+            const tablePos = this.TABLES_POSITIONS[tablePosIdx];
+            if (!this._hasThisTableBookin(tablePosIdx).length) {
                 this.canvasContext.drawImage(availabeTable, tablePos.x, tablePos.y);
             } else {
                 this.canvasContext.drawImage(reservedTable, tablePos.x, tablePos.y);
                 // overlay if reserved
                 this._drawTableOverlay(tablePos.x, tablePos.y);
             }
+            this.canvasContext.fillStyle = "black";
+            this.canvasContext.fillText(tablePosIdx + 1, tablePos.x + 23, tablePos.y + 34);
         }
     }
 
@@ -97,6 +86,40 @@ class Canvas {
     }
 
     drawAll() {
+        this.TABLE_HEIGHT = this._findImageToDraw("availableTable").img.height;
+        this.TABLE_WIDTH = this._findImageToDraw("availableTable").img.width;
+        this.CHAIR_HEIGHT = this._findImageToDraw("chairLeft").img.height;
+        this.CHAIR_WIDTH = this._findImageToDraw("chairLeft").img.width;
+        this.SPACE_HEIGHT = this._findImageToDraw("space").img.height;
+        this.SPACE_WIDTH = this._findImageToDraw("space").img.width;
+        this.SPACE_CENTER = { 
+            x: this.X_POSITION_ANCOR + this.SPACE_WIDTH / 2, 
+            y: this.Y_POSITION_ANCOR + this.SPACE_HEIGHT / 2, 
+        };
+        this.TABLES_POSITIONS = [
+            { x: this.SPACE_CENTER.x - 180, y: this.SPACE_CENTER.y - 150 },
+            { x: this.SPACE_CENTER.x - 30, y: this.SPACE_CENTER.y - 150 },
+            { x: this.SPACE_CENTER.x + 120, y: this.SPACE_CENTER.y - 150 },
+            { x: this.SPACE_CENTER.x + 120, y: this.SPACE_CENTER.y - 30 },
+            { x: this.SPACE_CENTER.x + 120, y: this.SPACE_CENTER.y + 95 },
+            { x: this.SPACE_CENTER.x - 30, y: this.SPACE_CENTER.y + 95 },
+            { x: this.SPACE_CENTER.x - 180, y: this.SPACE_CENTER.y + 95 },
+            { x: this.SPACE_CENTER.x - 180, y: this.SPACE_CENTER.y - 30 }
+        ];
+        this.CHAIRS_POSITIONS = {
+            Left: this.TABLES_POSITIONS.map((_, idx) => {
+                return { x: this.TABLES_POSITIONS[idx].x + 45, y: this.TABLES_POSITIONS[idx].y + 7 };
+            }),
+            Right: this.TABLES_POSITIONS.map((_, idx) => {
+                return { x: this.TABLES_POSITIONS[idx].x - 13, y: this.TABLES_POSITIONS[idx].y + 7 };
+            }),
+            Up: this.TABLES_POSITIONS.map((_, idx) => {
+                return { x: this.TABLES_POSITIONS[idx].x + 15, y: this.TABLES_POSITIONS[idx].y + 45 };
+            }),
+            Down: this.TABLES_POSITIONS.map((_, idx) => {
+                return { x: this.TABLES_POSITIONS[idx].x + 15, y: this.TABLES_POSITIONS[idx].y - 18 };
+            }),
+        };
         this._drawBackground();
         this._drawSpace();
         this._drawFuncyBlueRug();
@@ -105,17 +128,13 @@ class Canvas {
     }
 
     _imgLoadingDoneStart() {
-        this.TABLE_HEIGHT = this._findImageToDraw("availableTable").img.height;
-        this.TABLE_WIDTH = this._findImageToDraw("availableTable").img.width;
-        this.CHAIR_HEIGHT = this._findImageToDraw("chairLeft").img.height;
-        this.CHAIR_WIDTH = this._findImageToDraw("chairLeft").img.width;
-        console.log('Imgs loaded', 'RestaurantCanvas.js', 'line: ', '89');
+        
         this.drawAll();
     }
 
     _loadImgsAndStartIfReady() {
         this.imgsToLoadCount--;
-        console.log('Loaded image: ' + this.imgsToLoadCount, 'RestaurantCanvas.js', 'line: ', '52');
+        // console.log('Loaded image: ' + this.imgsToLoadCount, 'RestaurantCanvas.js', 'line: ', '52');
         if (this.imgsToLoadCount === 0) {
             this._imgLoadingDoneStart();
         }

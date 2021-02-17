@@ -12,7 +12,7 @@ import chairUp from '../../assets/chair_wood_family_up [1x1].png';
 import chairDown from '../../assets/chair_wood_family_down [1x1].png';
 
 let canvas;
-const RestaurantCanvas = ({ tableData, isStatic }) => {
+const RestaurantCanvas = ({ bookingData, isStatic }) => {
     const [screenDims, setScreenDims] = useState({ w: window.innerWidth, h: window.innerHeight });
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [portableModalPosition, setPortableModalPosition] = useState({});
@@ -32,12 +32,11 @@ const RestaurantCanvas = ({ tableData, isStatic }) => {
         ];
         canvas = new Canvas(canvasRefCurrent, screenDims, imgsArray);
         canvas.loadImagesAndStart();
-        console.log(canvas.availableTables, 'RestaurantCanvas.js', 'line: ', '36');
     }, []);
 
     useEffect(() => {
-        if (!tableData) {
-            tableData = [{ available: true },
+        if (!bookingData) {
+            bookingData = [{ available: true },
                 { available: true },
                 { available: true },
                 { available: false },
@@ -46,9 +45,9 @@ const RestaurantCanvas = ({ tableData, isStatic }) => {
                 { available: true },
                 { available: true } ]
         }
-        canvas.availableTables = tableData.map(table => table.available);
+        canvas.bookings = bookingData;
         canvas.drawAll();
-    }, [tableData])
+    }, [bookingData])
 
 
     useEffect(() => {

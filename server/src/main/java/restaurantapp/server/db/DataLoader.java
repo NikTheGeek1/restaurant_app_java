@@ -52,6 +52,7 @@ public class DataLoader implements ApplicationRunner {
 
     private void dataGenerator() {
 
+        // DONE bookings
         for(int i = 0; i < 500; i++) {
             int randomNameAndEmailIdx = (int) (Math.random() * Constants.emails.size());
             String randomEmail = emailPicker(randomNameAndEmailIdx);
@@ -62,6 +63,18 @@ public class DataLoader implements ApplicationRunner {
             Customer customer = saveCustomerToDB(customerList, randomEmail, randomName);
             Booking booking = saveBookingToDB(customer);
             saveReceiptToDB(booking);
+        }
+        // PENDING bookings
+        for(int i = 0; i < 500; i++) {
+            int randomNameAndEmailIdx = (int) (Math.random() * Constants.emails.size());
+            String randomEmail = emailPicker(randomNameAndEmailIdx);
+            String randomName = namePicker(randomNameAndEmailIdx);
+
+            List<Customer> customerList = customerRepository.findByEmail(randomEmail);
+
+            Customer customer = saveCustomerToDB(customerList, randomEmail, randomName);
+            Booking booking = saveBookingToDB(customer);
+            bookingRepository.save(booking);
         }
 
     }
@@ -112,8 +125,8 @@ public class DataLoader implements ApplicationRunner {
 
 
     private int randomMinute() {
-        List<Integer> availableMinutes = Arrays.asList(0, 15, 30, 45);
-        return (int) (Math.random() * availableMinutes.size());
+        List<Integer> availableMinutes = Arrays.asList(0, 30);
+        return availableMinutes.get((int) (Math.random() * availableMinutes.size()));
     }
     private Customer saveCustomerToDB(List<Customer> customerList, String randomEmail, String randomName) {
         Customer customer;
