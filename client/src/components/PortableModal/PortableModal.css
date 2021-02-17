@@ -1,8 +1,31 @@
 .portable-modal-container {
     position: absolute;
     display: block;
-    width: 80px;
-    height: 80px;
+    /* width: 150px; */
+    /* height: 100px; */
+    /* padding: .5rem 1.5rem; */
     z-index: 10;
-    background-color: red;
+    background-image: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7));
+    border-radius: .4rem;
+}
+
+.portable-modal-inner {
+    color: aliceblue;
+    display: grid;
+}
+
+.portable-modal-option {
+    padding: .5rem 1.5rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all .2s;
+}
+
+.portable-modal-option:hover {
+    background-color: aliceblue;
+    color: var(--colour-gray-1);
+}
+
+.hide-portable-modal {
+    visibility: hidden;
 }

@@ -31,6 +31,17 @@ public class CustomerController {
         return new ResponseEntity<>(customer, HttpStatus.CREATED);
     }
 
+
+    @PostMapping("/customers/make-reservation")
+    public ResponseEntity<?> loginCustomer(@RequestParam(name = "email") String email) {
+        List<Customer> existingCustomer = customerRepository.findByEmail(email);
+        if (existingCustomer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("Email does not exist.", HttpStatus.BAD_REQUEST));
+        }
+        Customer customer = existingCustomer.get(0);
+        return ResponseEntity.status(HttpStatus.OK).body(customer);
+    }
+
     @PostMapping("/customers/login")
     public ResponseEntity<?> loginCustomer(@RequestParam(name = "email") String email,
                                            @RequestParam(name = "password") String password) {

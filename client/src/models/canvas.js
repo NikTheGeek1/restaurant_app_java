@@ -184,7 +184,7 @@ class Canvas {
             const tablePos = this.TABLES_POSITIONS[tablePosIdx];
             if ((mousePos.x > tablePos.x && mousePos.x < (tablePos.x + this.TABLE_WIDTH)) &&
                 (mousePos.y > tablePos.y && mousePos.y < (tablePos.y + this.TABLE_HEIGHT))) {
-                return { type: this.TABLE_CLICK, tableId: tablePosIdx };
+                return { type: this.TABLE_CLICK, tableId: tablePosIdx+1 };
             }
         }
         return { type: this.USELESS_CLICK };

@@ -37,3 +37,22 @@ export const loginCustomer = (email, password, cbSuccess, cbError) => {
         })
         .catch(err => console.log(err));
 };
+
+
+export const fetchCustomer = (customerEmail, cbSuccess, cbError) => {
+    fetch(URL + `/make-reservation?email=${customerEmail}`, {
+        method: 'POST',
+        headers: {
+            'Application': 'application/json',
+            'Content-Type': 'application/json'
+        }})
+        .then(res => res.json())
+        .then(response => {
+            if (response.status && response.status !== 200) {
+                cbError(response);
+            } else {
+                cbSuccess(response);
+            }
+        })
+        .catch(err => console.log(err));
+};

@@ -12,10 +12,11 @@ import chairUp from '../../assets/chair_wood_family_up [1x1].png';
 import chairDown from '../../assets/chair_wood_family_down [1x1].png';
 
 let canvas;
-const RestaurantCanvas = ({ bookingData, isStatic }) => {
+const RestaurantCanvas = ({ bookingData, isStatic, currentDate, currentTime }) => {
     const [screenDims, setScreenDims] = useState({ w: window.innerWidth, h: window.innerHeight });
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [portableModalPosition, setPortableModalPosition] = useState({});
+    const [clickedTableNum, setClickedTableNum] = useState(null);
     const canvasRef = useRef(null);
 
     useEffect(() => {
@@ -58,6 +59,7 @@ const RestaurantCanvas = ({ bookingData, isStatic }) => {
         const clickedOjb = canvas.whereWasCanvasClicked(mousePos);
         const clickedType = clickedOjb.type;
         if (clickedType !== canvas.USELESS_CLICK) {
+            setClickedTableNum(clickedOjb.tableId);
             setPortableModalPosition(mousePos);
         } else {
             setPortableModalPosition({});
@@ -84,9 +86,15 @@ const RestaurantCanvas = ({ bookingData, isStatic }) => {
     return (
         <>
             <div style={{ position: "absolute", top: 0, left: 0, zIndex: 1, color: "white", fontSize: 40 }}>{mousePos.x}, {mousePos.y}</div>
-            {!!Object.keys(portableModalPosition).length && <PortableModal position={{ top: portableModalPosition.y, left: portableModalPosition.x }} />}
+            {!!Object.keys(portableModalPosition).length && <PortableModal
+                position={{ top: portableModalPosition.y, left: portableModalPosition.x }}
+                tableNum={clickedTableNum}
+                bookingData={bookingData}
+                bookingDate={currentDate}
+                bookingTime={currentTime}
+            />}
             {isStatic && <div className="static-overlay-canvas"></div>}
-            <canvas ref={canvasRef} className={isStatic ? "restaurant-canvas static-canvas": "restaurant-canvas"} height={screenDims.h} width={screenDims.w} />
+            <canvas ref={canvasRef} className={isStatic ? "restaurant-canvas static-canvas" : "restaurant-canvas"} height={screenDims.h} width={screenDims.w} />
         </>
     );
 };

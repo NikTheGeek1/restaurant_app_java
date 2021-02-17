@@ -37,7 +37,7 @@ const AdminInterface = () => {
 
     return (
         <>
-            <RestaurantCanvas bookingData={specificHourBookings} />
+            <RestaurantCanvas bookingData={specificHourBookings} currentDate={dateToString(selectedDate)} currentTime={HourlyTable.getHours()[selectedTime]}/>
             <div className="admin-interface-container">
                 <DateSelector
                     onDateChange={setSelectedDate} dateValue={selectedDate}

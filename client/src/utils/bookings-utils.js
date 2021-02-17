@@ -37,6 +37,10 @@ export const getBookingsOfSpecificHour = (timeSlotOffset, bookings) => {
     });
 };
 
+export const isTableAvailable = (bookings, tableNum) => {
+    return !!!bookings.filter(booking => booking.tableNum === tableNum).length;
+};
+
 const addTreillingZero = (num) => {
     if (num < 10) {
         return "0"+num;
