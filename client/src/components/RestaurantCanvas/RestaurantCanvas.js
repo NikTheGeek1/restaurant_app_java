@@ -36,14 +36,7 @@ const RestaurantCanvas = ({ bookingData, isStatic }) => {
 
     useEffect(() => {
         if (!bookingData) {
-            bookingData = [{ available: true },
-                { available: true },
-                { available: true },
-                { available: false },
-                { available: true },
-                { available: false },
-                { available: true },
-                { available: true } ]
+            bookingData = [];
         }
         canvas.bookings = bookingData;
         canvas.drawAll();

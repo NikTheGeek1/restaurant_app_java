@@ -63,7 +63,7 @@ class Canvas {
         this.canvasContext.font = "30px Arial";
         for (let tablePosIdx = 0; tablePosIdx < this.TABLES_POSITIONS.length; tablePosIdx++) {
             const tablePos = this.TABLES_POSITIONS[tablePosIdx];
-            if (!this._hasThisTableBookin(tablePosIdx).length) {
+            if (!this._hasThisTableBookin(tablePosIdx + 1).length) {
                 this.canvasContext.drawImage(availabeTable, tablePos.x, tablePos.y);
             } else {
                 this.canvasContext.drawImage(reservedTable, tablePos.x, tablePos.y);

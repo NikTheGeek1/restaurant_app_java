@@ -1,0 +1,5 @@
+.hourly-table-container {
+    position: absolute;
+    top: var(--canvas-start-top);
+    left: calc(var(--canvas-start-left) + var(--canvas-space-width));
+}
