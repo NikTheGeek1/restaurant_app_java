@@ -7,9 +7,11 @@ import ReduxThunk from 'redux-thunk';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import userDetailsReducer from './store/reducers/user-details';
+import adminDetailsReducer from './store/reducers/admin-details';
 
 const rootReducer = combineReducers({
-  userDetails: userDetailsReducer
+  userDetails: userDetailsReducer,
+  adminDetails: adminDetailsReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

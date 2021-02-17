@@ -1,4 +1,7 @@
 export const USER_LOGGED_IN = 'USER_LOGGED_IN';
+export const ADMIN_LOGGED_IN = 'ADMIN_LOGGED_IN';
+
+
 export const storeCookie = (cookie, cookieBody) => {
     localStorage.setItem(cookie, cookieBody);
 };

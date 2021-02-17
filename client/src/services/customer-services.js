@@ -29,7 +29,6 @@ export const loginCustomer = (email, password, cbSuccess, cbError) => {
         }})
         .then(res => res.json())
         .then(response => {
-            console.log(response, 'customer-services.js', 'line: ', '32');
             if (response.status && response.status !== 200) {
                 cbError(response);
             } else {
