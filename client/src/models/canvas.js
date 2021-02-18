@@ -1,4 +1,5 @@
 class Canvas {
+
     constructor(canvasRef, sceenDims, imgsArray) {
         this.screenDims = sceenDims;
         this.canvas = canvasRef;
@@ -8,8 +9,8 @@ class Canvas {
         this.mousePos = { x: 0, y: 0 };
         this.screenCenter = { x: sceenDims.w / 2, y: sceenDims.h / 2 };
         this.SPACE_CENTER = 0;
-        this.bookings = [true, true, false, true, true, false, false, true];
-        // CONSTANT PROPS
+        this.availableTables = [];
+        this.bookings = [];
         this.WALL_COLOUR = "#aaa";
         this.X_POSITION_ANCOR = 100; // 100 pixels from the left
         this.Y_POSITION_ANCOR = 100; // 100 pixels from the top
@@ -53,8 +54,8 @@ class Canvas {
         this.canvasContext.fillRect(tableX + 2, tableY, this.TABLE_WIDTH - 4, this.TABLE_HEIGHT - 10);
     }
    
-    _hasThisTableBookin(tableNum) {
-        return this.bookings.filter(booking => booking.tableNum === tableNum);
+    _isThisTableAvailable(tableNum) {
+        return this.availableTables.includes(tableNum);
     }
 
     _drawTables() {
@@ -63,7 +64,7 @@ class Canvas {
         this.canvasContext.font = "30px Arial";
         for (let tablePosIdx = 0; tablePosIdx < this.TABLES_POSITIONS.length; tablePosIdx++) {
             const tablePos = this.TABLES_POSITIONS[tablePosIdx];
-            if (!this._hasThisTableBookin(tablePosIdx + 1).length) {
+            if (this._isThisTableAvailable(tablePosIdx + 1)) {
                 this.canvasContext.drawImage(availabeTable, tablePos.x, tablePos.y);
             } else {
                 this.canvasContext.drawImage(reservedTable, tablePos.x, tablePos.y);
@@ -177,13 +178,19 @@ class Canvas {
             this._beginLoadingImage(image);
         }
     }
+    _getBookingOnTable(tableNum) {
+        if (this.bookings.filter(booking => booking.tableNum === tableNum).length > 1) {
+            debugger
+        }
+        // return this.bookings.filter(booking => booking.tableNum === tableNum);
+    }
 
     whereWasCanvasClicked(mousePos) {
-
         for (let tablePosIdx = 0; tablePosIdx < this.TABLES_POSITIONS.length; tablePosIdx++) {
             const tablePos = this.TABLES_POSITIONS[tablePosIdx];
             if ((mousePos.x > tablePos.x && mousePos.x < (tablePos.x + this.TABLE_WIDTH)) &&
                 (mousePos.y > tablePos.y && mousePos.y < (tablePos.y + this.TABLE_HEIGHT))) {
+                this._getBookingOnTable(tablePosIdx+1);
                 return { type: this.TABLE_CLICK, tableId: tablePosIdx+1 };
             }
         }

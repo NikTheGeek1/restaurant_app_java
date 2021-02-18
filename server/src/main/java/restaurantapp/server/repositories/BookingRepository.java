@@ -10,6 +10,7 @@ import restaurantapp.server.models.booking.Booking;
 import restaurantapp.server.models.booking.Status;
 
 import java.awt.print.Book;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -25,10 +26,11 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Modifying
     @Transactional
     @Query(value = "UPDATE bookings " +
-            "SET date = :date, time = :time, num_of_people = :numPeople, table_num = :tableNum, status =:#{#status.ordinal()} " +
+            "SET date = :date, time = :time, duration = :duration, num_of_people = :numPeople, table_num = :tableNum, status =:#{#status.ordinal()} " +
             "WHERE id = :id",
     nativeQuery = true)
     void updateById(@Param("date") LocalDate date, @Param("time") LocalTime time,
-            @Param("numPeople") int numPeople, @Param("tableNum") int tableNum,
-            @Param("status") Status status, @Param("id") Long id);
+                    @Param("numPeople") int numPeople, @Param("tableNum") int tableNum,
+                    @Param("duration") int duration, @Param("status") Status status,
+                    @Param("id") Long id);
 }

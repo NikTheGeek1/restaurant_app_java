@@ -32,7 +32,8 @@ public class ReceiptController {
     public ResponseEntity<Receipt> addReceipt(@RequestBody Receipt receipt) {
         Booking updatedBooking = receipt.getBooking();
         updatedBooking.setReceipt(receipt);
-        bookingRepository.updateById(updatedBooking.getDate(), updatedBooking.getTime(), updatedBooking.getNumOfPeople(), updatedBooking.getTableNum(), updatedBooking.getStatus(), updatedBooking.getId());
+        System.out.println(receipt);
+        bookingRepository.updateById(updatedBooking.getDate(), updatedBooking.getTime(), updatedBooking.getNumOfPeople(), updatedBooking.getTableNum(), updatedBooking.getDuration(), updatedBooking.getStatus(), updatedBooking.getId());
         receiptRepository.save(receipt);
         return new ResponseEntity<>(receipt, HttpStatus.CREATED);
     }

@@ -1,5 +1,3 @@
-import { fetchCustomer } from '../services/customer-services';
-
 const URL = "http://localhost:8080/bookings";
 export const getBookingsFromDate = (date, status, cbSuccess, cbError) => {
     fetch(URL + `?date=${date}&status=${status}`)
@@ -14,31 +12,60 @@ export const getBookingsFromDate = (date, status, cbSuccess, cbError) => {
         .catch(err => console.log(err));
 };
 
-const makeReservation = (booking, customer, cbSuccess, cbError) => {
-    const bookingWithCustomer = { ...booking, customer: customer };
-    console.log(bookingWithCustomer, 'booking-services.js', 'line: ', '19');
-    fetch(URL, {
+export const addBookingForCustomer = (booking, customerEmail, cbSuccess, cbError) => {
+    fetch(URL + `/make-reservation?email=${customerEmail}`, {
         method: "POST",
         headers: {
             "Application": "application/json",
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(bookingWithCustomer)
+        body: JSON.stringify(booking)
     })
         .then(res => res.json())
         .then(response => {
-            if (response.status && response.status !== 200) {
+            if (response.status && response.status !== 200 && !response.id) {
                 cbError(response);
             } else {
                 cbSuccess(response);
             }
         })
         .catch(err => console.log(err));
-
 };
 
-export const addBooking = (booking, customerEmail, cbSuccess, cbError) => {
-    fetchCustomer(customerEmail,
-        successResponse => makeReservation(booking, successResponse, cbSuccess, cbError),
-        errorResponse => cbError(errorResponse));
+export const removeBooking = (bookingId, cbSuccess, cbError) => {
+    fetch(URL + `?bookingId=${bookingId}`, {
+        method: "DELETE",
+        headers: {
+            "Application": 'application/json',
+            "Content-Type": 'application/json' 
+        }
+    })
+        .then(response => {
+            if (response.status && response.status !== 200 && !response.id) {
+                cbError(response);
+            } else {
+                cbSuccess(response);
+            }
+        })
+        .catch(err => console.log(err));
+};
+
+export const editBooking = (booking, cbSuccess, cbError) => {
+    console.log(booking, 'booking-services.js', 'line: ', '54');
+    fetch(URL, {
+        method: "PATCH",
+        headers: {
+            "Application": 'application/json',
+            "Content-Type": 'application/json' 
+        },
+        body: JSON.stringify(booking)
+    })
+        .then(response => {
+            if (response.status && response.status !== 200 && !response.id) {
+                cbError(response);
+            } else {
+                cbSuccess(response);
+            }
+        })
+        .catch(err => console.log(err));
 };

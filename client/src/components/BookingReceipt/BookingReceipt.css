@@ -1,0 +1,12 @@
+.bookint-receipt-container > hr {
+    margin-bottom: 1rem;
+}
+
+.bookint-receipt-container {
+    overflow-y: scroll;
+    max-height: 90vh;
+}
+
+.menu-item-title {
+    color: aliceblue;
+}

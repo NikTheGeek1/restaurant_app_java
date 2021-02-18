@@ -1,36 +1,62 @@
-// export const getBookingsForTime = (timeSlotOffset, bookings) => {
-//     const twoHours = 2 * 60 * 60 * 1000;
-//     const timeSlotEnd = new Date(timeSlotOffset.setTime(timeSlotOffset.getTime() + twoHours));
 
-//     return bookings.filter(booking => {
-//         const bookingOffset = new Date(booking.date + " " + booking.time);
-//         const bookingEnd = new Date(bookingOffset.setTime(bookingOffset.getTime() + twoHours));
-//         if ((timeSlotOffset > bookingOffset &&
-//             timeSlotOffset < bookingEnd)
-//             || (timeSlotEnd > bookingOffset &&
-//                 incomingBookingEnd < bookingEnd)
-//             || (timeSlotOffset == bookingOffset)) {
-//             return true;
-//         }
-//     });
-// };
+const getAllBookingsOfTable = (tableNum, dayBookings) => {
+    return dayBookings.filter(booking => booking.tableNum === tableNum);
+};
 
-export const getBookingsOfSpecificHour = (timeSlotOffset, bookings) => {
-    const twoHours = 2 * 60 * 60 * 1000;
+const convertHoursToMins = hours => {
+    return hours * 60;
+};
+
+const getTimesOfBookings = (bookings) => {
+    return bookings.map(booking => convertHoursToMins(convertStringHourToIntHour(booking.time)));
+};
+
+const convertStringHourToIntHour = stringHour => {
+    const hours = +stringHour.slice(0, 2);
+    const mins = (+stringHour.slice(3, 5)) / 60;
+    return hours + mins;
+};
+
+
+export const getNearestBooking = (dayBookings, tableNum, timeSlot) => {
+    const tableBookings = getAllBookingsOfTable(tableNum, dayBookings);
+    const timesInHours = getTimesOfBookings(tableBookings);
+    const timeSlotInHours = convertHoursToMins(convertStringHourToIntHour(timeSlot));
+    const bookingsAfterTimeSlot = timesInHours.filter(time => time > timeSlotInHours);
+    return Math.min(...bookingsAfterTimeSlot) - timeSlotInHours;
+};
+
+export const getAvailableTablesOfSpecificHour = timeSlotBookings => {
+    const availableTableNums = [1, 2, 3, 4, 5, 6, 7, 8].filter(table => !hasThisTableBookin(table, timeSlotBookings));
+    return availableTableNums;  
+};
+
+const hasThisTableBookin = (tableNum, bookings) => {
+    return !!bookings.filter(booking => booking.tableNum === tableNum).length;
+};
+
+const convertMinToMilSec = min => {
+    return min * 60 * 1000; 
+};
+
+export const getBookingsOfSpecificHour = (timeSlotOffset, timeSlotDuration, dayBookings) => {
+    const bookingDuration = convertMinToMilSec(timeSlotDuration);
     let timeSlotEnd = new Date(timeSlotOffset);
-    timeSlotEnd.setTime(timeSlotOffset.getTime() + twoHours);
+    timeSlotEnd.setTime(timeSlotOffset.getTime() + bookingDuration);
     timeSlotOffset = makeTimeComparable(timeSlotOffset);
     timeSlotEnd = makeTimeComparable(timeSlotEnd);
-    return bookings.filter(booking => {
+    return dayBookings.filter(booking => {
         let bookingOffset = new Date(booking.date + " " + booking.time);
         let bookingEnd = new Date(bookingOffset);
-        bookingEnd.setTime(bookingOffset.getTime() + twoHours)
+        bookingEnd.setTime(bookingOffset.getTime() + convertMinToMilSec(booking.duration));
         bookingOffset = makeTimeComparable(bookingOffset);
         bookingEnd = makeTimeComparable(bookingEnd);
         if ((timeSlotOffset > bookingOffset &&
             timeSlotOffset < bookingEnd)
             || (timeSlotEnd > bookingOffset &&
-                timeSlotEnd < bookingEnd)
+                timeSlotEnd < bookingEnd) 
+            || (timeSlotOffset <= bookingOffset) &&
+                (timeSlotEnd >= bookingEnd)
             || (timeSlotOffset == bookingOffset)) {
             return true;
         }

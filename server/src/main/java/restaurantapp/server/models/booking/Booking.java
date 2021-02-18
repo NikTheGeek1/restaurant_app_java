@@ -28,6 +28,9 @@ public class Booking {
     @Column
     private Status status;
 
+    @Column
+    private int duration;
+
     @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"booking"})
     private Receipt receipt;
@@ -45,16 +48,23 @@ public class Booking {
 
     public Booking() { }
 
-    public Booking(LocalDate date, LocalTime time, Integer numOfPeople, Customer customer, Integer tableNum) {
+    public Booking(LocalDate date, LocalTime time, Integer numOfPeople, Customer customer, Integer tableNum, int duration) {
         this.date = date;
         this.time = time;
         this.status = Status.PENDING;
         this.numOfPeople = numOfPeople;
         this.customer = customer;
         this.tableNum = tableNum;
+        this.duration = duration;
     }
 
+    public int getDuration() {
+        return duration;
+    }
 
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
     public Integer getTableNum() {
         return tableNum;
@@ -115,17 +125,21 @@ public class Booking {
         this.customer = customer;
     }
 
-    private static boolean isTimeSlotAvailable(LocalTime time, List<Booking> existingBookings) {
-        Duration twoHours = Duration.ofHours(2);
+    private static boolean isTimeSlotAvailable(LocalTime incomingBookingOffset, Duration incomingBookingDuration, List<Booking> existingBookings) {
         for (Booking booking : existingBookings) {
             LocalTime existingBookingOffset = booking.getTime();
-            LocalTime existingBookingEnd = booking.getTime().plus(twoHours);
-            LocalTime incomingBookingOffset = time;
-            LocalTime incomingBookingEnd = time.plus(twoHours);
+            LocalTime existingBookingEnd = booking.getTime().plus(Duration.ofMinutes(booking.getDuration()));
+            LocalTime incomingBookingEnd = incomingBookingOffset.plus(incomingBookingDuration);
+            if (existingBookingEnd.isAfter(LocalTime.of(00, 00)) ||
+                    existingBookingEnd.equals(LocalTime.of(00, 00))) {
+                existingBookingEnd = LocalTime.of(23, 30);
+            }
             if ((incomingBookingOffset.isAfter(existingBookingOffset) &&
                                     incomingBookingOffset.isBefore(existingBookingEnd))
                ||   (incomingBookingEnd.isAfter(existingBookingOffset) &&
                                     incomingBookingEnd.isBefore(existingBookingEnd))
+               || (incomingBookingOffset.isBefore(existingBookingOffset) &&
+                    incomingBookingEnd.isAfter(existingBookingEnd))
                ||   (incomingBookingOffset.equals(existingBookingOffset))){
                 return false; // available = false
             }
@@ -134,16 +148,21 @@ public class Booking {
     }
 
     public static boolean isBookingAvailable(Booking incomingBooking, List<Booking> existingBookings) {
-        Duration twoHours = Duration.ofHours(2);
         List<Booking> overlappingDayAndTableNumBookings = existingBookings.stream()
                 .filter(booking -> booking.getStatus() == Status.PENDING && booking.getDate().isEqual(incomingBooking.getDate()) && booking.getTableNum() == incomingBooking.getTableNum())
                 .collect(Collectors.toList());
-        return isTimeSlotAvailable(incomingBooking.getTime(), overlappingDayAndTableNumBookings);
+        return isTimeSlotAvailable(incomingBooking.getTime(), Duration.ofMinutes(incomingBooking.getDuration()), overlappingDayAndTableNumBookings);
     }
 
-    public static List<Booking> removeBookingById(Booking bookingToBeRemoved, List<Booking> bookings) {
+    public static List<Booking> removeBookingByBooking(Booking bookingToBeRemoved, List<Booking> bookings) {
         return bookings.stream()
                 .filter(booking -> booking.getId() != bookingToBeRemoved.getId())
+                .collect(Collectors.toList());
+    }
+
+    public static List<Booking> removeBookingById(Long id, List<Booking> bookings) {
+        return bookings.stream()
+                .filter(booking -> booking.getId() != id)
                 .collect(Collectors.toList());
     }
 

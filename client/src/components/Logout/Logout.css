@@ -1,0 +1,5 @@
+.logout-btn {
+    position: absolute;
+    top: calc(var(--canvas-start-top) - 35px);
+    left: var(--canvas-start-left);
+}

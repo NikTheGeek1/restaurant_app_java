@@ -11,6 +11,6 @@ public class GlobalConfigs implements WebMvcConfigurer {
         registry.addMapping("/**").allowCredentials(true)
                 .allowedOrigins("http://localhost:3000")
                 .allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept", "Application", "X-CSRF-TOKEN")
-                .allowedMethods("POST", "GET", "OPTIONS", "DELETE");
+                .allowedMethods("POST", "GET", "OPTIONS", "DELETE", "PATCH");
     }
 }

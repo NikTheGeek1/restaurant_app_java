@@ -2,7 +2,7 @@ import Backdrop from '../Backdrop/Backdrop';
 import './Modal.css';
 import ReactDOM from 'react-dom';
 
-const Modal = ({ showModal, children, hideModalHandler }) => {
+const Modal = ({ showModal, children, hideModalHandler, type }) => {
     if (!showModal) {
         return <> </>;
     }
@@ -14,7 +14,9 @@ const Modal = ({ showModal, children, hideModalHandler }) => {
             </Backdrop>
         </>
     );
-
+    if (type === "small") {
+        return ReactDOM.createPortal(ModalJSX, document.getElementById('small-modal'));
+    }
     return ReactDOM.createPortal(ModalJSX, document.getElementById('modal'));
 };
 

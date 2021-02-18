@@ -1,4 +1,4 @@
-import { getBookingsOfSpecificHour, dateToString } from './bookings-utils';
+import { getBookingsOfSpecificHour } from './bookings-utils';
 
 class HourlyTable {
 
@@ -144,11 +144,11 @@ class HourlyTable {
         return this.hours = ["12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"];
     }
 
-    generateTableDataAndColumns(dateAsString, dailyBookings, currentSelectedTime) {
+    generateTableDataAndColumns(dateAsString, dailyBookings, duration, currentSelectedTime) {
         const data = [];
         for (let h = 0; h < 22; h++) {
             const dateOfBookings = new Date(dateAsString + " " + this.hours[h]);
-            const bookings = getBookingsOfSpecificHour(dateOfBookings, dailyBookings);
+            const bookings = getBookingsOfSpecificHour(dateOfBookings, duration, dailyBookings);
             let dataInstance = { id: h, timeSlot: h % 2 === 0 ? this.hours[h] : "", selectedRow: currentSelectedTime === this.hours[h]};
             for (let booking of bookings) {
                 dataInstance = { ...dataInstance, ["table" + booking.tableNum]: " "};

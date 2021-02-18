@@ -1,0 +1,13 @@
+.form-input-slider-container {
+    position: relative;
+    margin-bottom: 5rem;
+    margin-top: .5rem;
+}
+
+.form-input-slider-title {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.8rem;
+    color: white;
+    margin-bottom: 0;
+}

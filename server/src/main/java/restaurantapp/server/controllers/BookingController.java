@@ -5,12 +5,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import restaurantapp.server.models.Customer;
 import restaurantapp.server.models.booking.Booking;
 import restaurantapp.server.models.booking.Status;
 import restaurantapp.server.repositories.BookingRepository;
+import restaurantapp.server.repositories.CustomerRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BookingController {
@@ -18,14 +21,20 @@ public class BookingController {
     @Autowired
     BookingRepository bookingRepository;
 
+    @Autowired
+    CustomerRepository customerRepository;
+
     @GetMapping("/bookings")
     public ResponseEntity<List<Booking>> bookings(
             @RequestParam(name = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             @RequestParam(name = "status", required = false) String bookingStatus
     ) {
-        if (date != null && bookingStatus != null && bookingStatus.equals("pending")) {
-            return new ResponseEntity<>(bookingRepository.findByDateAndStatus(date, Status.PENDING), HttpStatus.OK);
+        if (date != null && bookingStatus != null) {
+            if (bookingStatus.equals("PENDING")) {
+                return new ResponseEntity<>(bookingRepository.findByDateAndStatus(date, Status.PENDING), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(bookingRepository.findByDateAndStatus(date, Status.DONE), HttpStatus.OK);
         }
         if (date != null && bookingStatus != null && bookingStatus.equals("done")) {
             return new ResponseEntity<>(bookingRepository.findByDateAndStatus(date, Status.DONE), HttpStatus.OK);
@@ -37,27 +46,42 @@ public class BookingController {
     }
 
     @PostMapping("/bookings")
-    public ResponseEntity<Booking> addBooking(@RequestBody Booking booking) {
+    public ResponseEntity<?> addBooking(@RequestBody Booking booking) {
         List<Booking> existingBookings = bookingRepository.findAll();
         if (Booking.isBookingAvailable(booking, existingBookings)) {
             bookingRepository.save(booking);
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(booking, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("Booking not available.", HttpStatus.BAD_REQUEST));
+    }
+
+    @PostMapping("/bookings/make-reservation")
+    public ResponseEntity<?> addBooking(@RequestBody Booking booking,
+                                        @RequestParam(name = "email") String email) {
+        List<Booking> existingBookings = bookingRepository.findAll();
+        if (Booking.isBookingAvailable(booking, existingBookings)) {
+            List<Customer> customerList = customerRepository.findByEmail(email);
+            Customer customer;
+            if (customerList.isEmpty()) {
+                customer = new Customer(email, "123", email);
+                customerRepository.save(customer);
+            } else {
+                customer = customerList.get(0);
+            }
+            booking.setCustomer(customer);
+            bookingRepository.save(booking);
+            return new ResponseEntity<>(booking, HttpStatus.CREATED);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("Booking not available.", HttpStatus.BAD_REQUEST));
     }
 
     @PatchMapping("/bookings")
-    public ResponseEntity<Booking> updateBooking(@RequestParam(name = "bookingId") Long id, @RequestBody Booking updatedBooking) {
-        if (id != null) {
-            List<Booking> existingBookings = Booking.removeBookingById(updatedBooking, bookingRepository.findAll());
-            if (Booking.isBookingAvailable(updatedBooking, existingBookings)) {
-                bookingRepository.updateById(updatedBooking.getDate(), updatedBooking.getTime(), updatedBooking.getNumOfPeople(), updatedBooking.getTableNum(), updatedBooking.getStatus(), updatedBooking.getId());
-                return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
-            }
-            return new ResponseEntity<>(updatedBooking, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(updatedBooking, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Booking> updateBooking(@RequestBody Booking updatedBooking) {
+        List<Booking> existingBookings = Booking.removeBookingByBooking(updatedBooking, bookingRepository.findAll());
+        bookingRepository.updateById(updatedBooking.getDate(), updatedBooking.getTime(), updatedBooking.getNumOfPeople(), updatedBooking.getTableNum(), updatedBooking.getDuration(), updatedBooking.getStatus(), updatedBooking.getId());
+        return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/bookings")
     public ResponseEntity<Void> deleteBooking(@RequestParam(name = "bookingId") Long id) {

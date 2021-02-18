@@ -1,0 +1,10 @@
+.selected-hour-container {
+    position: absolute;
+    top: calc(var(--canvas-start-top) - 60px);
+    left: calc(var(--canvas-start-left) + 230px);
+}
+
+.hour-selector-title {
+    color: aliceblue;
+    margin-bottom: 2rem;
+}

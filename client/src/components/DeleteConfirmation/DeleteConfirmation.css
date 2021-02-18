@@ -1,0 +1,13 @@
+.delete-confirmation-container {
+    text-align: center;
+    display: grid;
+    grid-template-areas: "title title" "delete cancel";
+    justify-items: center;
+    row-gap: 1rem;
+}
+
+.delete-booking-confirmation-title {
+    grid-area: title;
+    color: aliceblue;
+    text-align: center;
+}

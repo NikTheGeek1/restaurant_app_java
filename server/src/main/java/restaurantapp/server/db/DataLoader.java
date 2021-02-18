@@ -13,6 +13,7 @@ import restaurantapp.server.repositories.BookingRepository;
 import restaurantapp.server.repositories.ReceiptRepository;
 import restaurantapp.server.repositories.CustomerRepository;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class DataLoader implements ApplicationRunner {
         Customer customer1 = new Customer("test1@test1.com", "123", "Nial");
         customerRepository.save(customer1);
 
-        Booking booking1 = new Booking(LocalDate.of(2021, 2, 16), LocalTime.of(6, 0), 4, customer1, 4);
+        Booking booking1 = new Booking(LocalDate.of(2021, 2, 16), LocalTime.of(6, 0), 4, customer1, 4, 120);
         customer1.addBooking(booking1);
 
 //        Receipt receipt1 = new Receipt(booking1, Arrays.asList(MenuItem.SAMOSA, MenuItem.LEMON_SODA));
@@ -61,7 +62,7 @@ public class DataLoader implements ApplicationRunner {
             List<Customer> customerList = customerRepository.findByEmail(randomEmail);
 
             Customer customer = saveCustomerToDB(customerList, randomEmail, randomName);
-            Booking booking = saveBookingToDB(customer);
+            Booking booking = saveBookingToDB(customer,2);
             saveReceiptToDB(booking);
         }
         // PENDING bookings
@@ -73,7 +74,7 @@ public class DataLoader implements ApplicationRunner {
             List<Customer> customerList = customerRepository.findByEmail(randomEmail);
 
             Customer customer = saveCustomerToDB(customerList, randomEmail, randomName);
-            Booking booking = saveBookingToDB(customer);
+            Booking booking = saveBookingToDB(customer, 3);
             bookingRepository.save(booking);
         }
 
@@ -99,19 +100,26 @@ public class DataLoader implements ApplicationRunner {
         return menuItems;
     }
 
-    private Booking saveBookingToDB(Customer customer) {
+    private Booking saveBookingToDB(Customer customer, int month) {
         LocalTime bookingTime = LocalTime.of(randomHour(), randomMinute());
         int randomTableNum = (int) (Math.random() * 8 + 1);
-        LocalDate bookingDate = LocalDate.of(2021, 2, randomDateOfMonth());
+        LocalDate bookingDate = LocalDate.of(2021, month, randomDateOfMonth());
         List<Booking> existingBookings = bookingRepository.findByDate(bookingDate);
-        Booking booking = new Booking(bookingDate, bookingTime, 4, customer, randomTableNum);
+        int bookingDuration = randomDuration();
+        Booking booking = new Booking(bookingDate, bookingTime, 4, customer, randomTableNum, bookingDuration);
 
         if (!Booking.isBookingAvailable(booking, existingBookings)) {
-            return saveBookingToDB(customer);
+            return saveBookingToDB(customer, month);
         }
         customer.addBooking(booking);
         return booking;
-    };
+    }
+
+    private int randomDuration() {
+        List<Integer> possibleDurations = Arrays.asList(30, 60, 90, 120);
+        return possibleDurations.get((int) (Math.random() * possibleDurations.size()));
+
+    }
 
     private int randomDateOfMonth() {
         return (int) (Math.random() * 28 + 1);
