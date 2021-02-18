@@ -1,0 +1,42 @@
+.time-selector-container {
+    position: absolute;
+    top: calc(var(--canvas-start-top) + 90px);
+    left: calc(var(--canvas-start-left) - 60px);
+    height: 300px;
+    width: 3px;
+}
+
+
+
+.vertical-slider {
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.example-thumb-vertical {
+    cursor: pointer;
+    width: 60px;
+    height: 20px;
+    background-color: var(--colour-primary);
+    text-align: center;
+    border-radius: 10px;
+    left: -27px;
+}
+
+
+.example-track-vertical {
+    height: 100%;
+    cursor: pointer;
+    background-color: var(--colour-gray-3);
+}
+
+.example-mark-vertical {
+    width: 10px;
+    height: 10px;
+    background-color: var(--colour-secondary);
+    margin-top: -5px;
+}

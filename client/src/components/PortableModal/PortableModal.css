@@ -24,8 +24,13 @@
 .portable-modal-option:hover {
     background-color: aliceblue;
     color: var(--colour-gray-1);
+    border-radius: .5rem;
 }
 
 .hide-portable-modal {
     visibility: hidden;
+}
+
+.option-see-details-done-booking {
+
 }

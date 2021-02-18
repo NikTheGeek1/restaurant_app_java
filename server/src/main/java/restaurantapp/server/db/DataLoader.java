@@ -63,6 +63,11 @@ public class DataLoader implements ApplicationRunner {
 
             Customer customer = saveCustomerToDB(customerList, randomEmail, randomName);
             Booking booking = saveBookingToDB(customer,2);
+        }
+        // DONE continue since receipts must be given after all bookings have been created (no overlapping)
+        List<Booking> bookings = bookingRepository.findAll();
+        for (int i = 0; i < bookings.size(); i++) {
+            Booking booking = bookings.get(i);
             saveReceiptToDB(booking);
         }
         // PENDING bookings
@@ -75,7 +80,6 @@ public class DataLoader implements ApplicationRunner {
 
             Customer customer = saveCustomerToDB(customerList, randomEmail, randomName);
             Booking booking = saveBookingToDB(customer, 3);
-            bookingRepository.save(booking);
         }
 
     }
@@ -84,7 +88,7 @@ public class DataLoader implements ApplicationRunner {
         List<MenuItem> randomMenuItems = generateRandomMenuItems();
         Receipt receipt = new Receipt(booking, randomMenuItems);
         booking.setReceipt(receipt);
-        bookingRepository.save(booking);
+        bookingRepository.updateById(booking.getDate(), booking.getTime(), booking.getNumOfPeople(), booking.getTableNum(), booking.getDuration(), booking.getStatus(), booking.getId());
         receiptRepository.save(receipt);
         return receipt;
     }
@@ -112,6 +116,7 @@ public class DataLoader implements ApplicationRunner {
             return saveBookingToDB(customer, month);
         }
         customer.addBooking(booking);
+        bookingRepository.save(booking);
         return booking;
     }
 

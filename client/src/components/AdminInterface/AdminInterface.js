@@ -8,10 +8,10 @@ import DateSelector from '../DateSelector/DateSelector';
 import HourlyTable from '../../utils/table-utils';
 import { useLocation } from 'react-router-dom';
 import PortableModal from '../PortableModal/PortableModal';
-import HourSelector from '../HourSelector/HourSelector';
+import DurationSelector from '../HourSelector/HourSelector';
 import Logout from '../Logout/Logout';
 import Button from '../Button/Button';
-
+import TimeSelector from '../TimeSelector/TimeSelector';
 
 
 const hourlyTable = new HourlyTable();
@@ -75,7 +75,7 @@ const AdminInterface = () => {
         <>
             <Logout user={"ADMIN"} />
             <div className="status-of-bookings-container">
-                <Button onClickHandler={toggleBookingStatus} title="Bookings status" />
+                <Button onClickHandler={toggleBookingStatus} title={pendingOrDoneBookings === "PENDING" ? "Pending Bookings" : "Done Bookings"} />
             </div>
             <RestaurantCanvas
                 bookingData={specificHourBookings}
@@ -84,6 +84,7 @@ const AdminInterface = () => {
             />
             <div className="admin-interface-container">
                 {!!Object.keys(portableModalPosition).length && <PortableModal
+                    pendingOrDone={pendingOrDoneBookings}
                     hidePortableModalHandler={setPortableModalPosition}
                     clickedBooking={clickedTableObj}
                     position={{ top: portableModalPosition.mousePos.y, left: portableModalPosition.mousePos.x }}
@@ -94,11 +95,9 @@ const AdminInterface = () => {
                     bookingDate={dateToString(selectedDate)}
                     bookingTime={HourlyTable.getHours()[selectedTime]}
                 />}
-                <HourSelector onHourChange={setSelectedDuration} hourValue={selectedDuration} />
-                <DateSelector
-                    onDateChange={setSelectedDate} dateValue={selectedDate}
-                    onTimeChange={setSelectedTime} timeValue={selectedTime}
-                />
+                <DurationSelector onHourChange={setSelectedDuration} hourValue={selectedDuration} />
+                <TimeSelector onTimeChange={setSelectedTime} timeValue={selectedTime}/>
+                <DateSelector onDateChange={setSelectedDate} dateValue={selectedDate} />
                 <HourlyAvailabilityTable data={reservedBookingsTableData} date={dateToString(selectedDate)} />
             </div>
         </>

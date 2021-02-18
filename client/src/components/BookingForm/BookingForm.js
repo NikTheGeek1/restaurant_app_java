@@ -42,7 +42,7 @@ const BookingForm = ({ type, clickedBooking, bookingDuration, tableNum, date, ti
         hidePortableModalHandler({});
         history.push('/', { date, time, bookingDuration });
     };
-
+    console.log(type, 'BookingForm.js', 'line: ', '45');
     return (
         <form className="booking-form-container" onSubmit={onAddBookingHandler}>
             <h3 className="booking-box-title">Booking reservation</h3>
@@ -50,7 +50,7 @@ const BookingForm = ({ type, clickedBooking, bookingDuration, tableNum, date, ti
             <FormInput value={type === "edit" ? clickedBooking.customer.email : ''} disabled={type === "edit"} onChange={setCustomerEmail} placeholder="Email" label="Email" type="email" />
             <FormInput value={numOfPeople} onChange={setNumOfPeople} placeholder="Number of people" label="Number of people" type="number" />
             <FormInput disabled={true} placeholder="Date" label="Date" type="date" value={date} />
-            <FormInputSlider title="Duration" onChange={setDuration} disabled={type === "edit"} sliderValue={type === "edit" ? clickedBooking.duration : duration} maxValue={nearestBookingDiff < 120 ? nearestBookingDiff : 120} />
+            <FormInputSlider title="Duration" disabled={type === "edit"} onChange={setDuration} sliderValue={type === "edit" ? clickedBooking.duration : duration} maxValue={nearestBookingDiff < 120 ? nearestBookingDiff : 120} />
             <FormInput disabled={true} placeholder="Time" label="Time" type="time" value={time} />
             <FormInput disabled={true} placeholder="Table Number" label="Table Number" type="number" value={tableNum} />
             <div className="form-btn-container">

@@ -8,14 +8,16 @@ import { useHistory } from 'react-router-dom';
 import { removeBooking } from '../../services/booking-services';
 import BookingReceipt from '../BookingReceipt/BookingReceipt';
 import { addReceipt } from '../../services/receipt-services';
+import DoneBookingDetails from '../DoneBookingDetails/DoneBookingDetails';
 
-const PortableModal = ({ bookingDuration, clickedBooking, position, bookingData, tableNum, bookingTime, bookingDate, hidePortableModalHandler, dayBookings }) => {
+const PortableModal = ({ pendingOrDone, bookingDuration, clickedBooking, position, bookingData, tableNum, bookingTime, bookingDate, hidePortableModalHandler, dayBookings }) => {
     const [showAddBookingModal, setShowAddBookingModal] = useState(false);
     const [hidePortableModal, setHidePortableModal] = useState('');
     const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
     const [showEditBookingModal, setShowEditBookingModal] = useState(false);
     const [nearestBookingDiff, setNearestBookingDiff] = useState(120);
     const [showCloseBookingModal, setShowCloseBookingModal] = useState(false);
+    const [showDoneBookingDetailsModal, setShowDoneBookingDetailsModal] = useState(false);
 
     const history = useHistory();
 
@@ -27,8 +29,8 @@ const PortableModal = ({ bookingDuration, clickedBooking, position, bookingData,
     };
 
     const editBookingHandler = () => {
-        setShowEditBookingModal(true);
         setHidePortableModal("hide-portable-modal");
+        setShowEditBookingModal(true);
     };
 
     const removeBookingHandler = () => {
@@ -43,14 +45,19 @@ const PortableModal = ({ bookingDuration, clickedBooking, position, bookingData,
         );
     };
 
+    const detailsDoneBookingHandler = () => {
+        setHidePortableModal("hide-portable-modal");
+        setShowDoneBookingDetailsModal(true);
+    };
+
     const handleDeleteSuccesfulResponse = response => {
         hidePortableModalHandler({});
         history.push('/', { date: bookingDate, time: bookingTime, bookingDuration: bookingDuration });
     };
 
     const closeBookingHandler = () => {
-        setShowCloseBookingModal(true);
         setHidePortableModal("hide-portable-modal");
+        setShowCloseBookingModal(true);
     };
 
     const submitReceiptHandler = receipt => {
@@ -67,6 +74,13 @@ const PortableModal = ({ bookingDuration, clickedBooking, position, bookingData,
             <div className="option-get-booking-details portable-modal-option" onClick={closeBookingHandler}>Close</div>
         </div>
     );
+    if (pendingOrDone === "DONE") {
+        modalOptionsJSX = (
+            <div className="not-available-table portable-modal-inner">
+                <div className="option-see-details-done-booking portable-modal-option" onClick={detailsDoneBookingHandler}>Details</div>
+            </div>
+        );    
+    }
 
     if (isTableAvailable(bookingData, tableNum)) {
         modalOptionsJSX = (
@@ -85,10 +99,13 @@ const PortableModal = ({ bookingDuration, clickedBooking, position, bookingData,
                 <DeleteConfirmation title="Deleting booking - are you sure?" onDeleteConfirmed={deleteConfirmedHandler} hideModalHandler={setDeleteConfirmationModal} />
             </Modal>
             <Modal hideModalHandler={setShowEditBookingModal} showModal={showEditBookingModal}>
-                <BookingForm bookingDuration={bookingDuration} clickedBooking={clickedBooking} tableNum={tableNum} date={bookingDate} time={bookingTime} hidePortableModalHandler={hidePortableModalHandler} />
+                <BookingForm type={"edit"} bookingDuration={bookingDuration} clickedBooking={clickedBooking} tableNum={tableNum} date={bookingDate} time={bookingTime} hidePortableModalHandler={hidePortableModalHandler} />
             </Modal>
             <Modal hideModalHandler={setShowCloseBookingModal} showModal={showCloseBookingModal}>
                 <BookingReceipt clickedBooking={clickedBooking} onSubmitReceipt={submitReceiptHandler} />
+            </Modal>
+            <Modal hideModalHandler={setShowDoneBookingDetailsModal} showModal={showDoneBookingDetailsModal}>
+                <DoneBookingDetails clickedBooking={clickedBooking}/>
             </Modal>
         </div>
     );
