@@ -1,0 +1,30 @@
+.stats-large-box {
+    background-color: var(--colour-gray-3);
+    height: 300px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 4px  rgba(0, 0, 0, .5);
+    display: grid;
+    grid-template-areas: "title title" "figure figure";
+    grid-template-rows: 50px 1fr;
+}
+
+.box-title {
+ grid-area: title;    
+ align-self: end;
+ font-size: 16px;
+}
+
+.large-box-figure {
+ grid-area: figure;
+ font-size: 30px;
+ color: var(--colour-primary);    
+}
+
+.stats-box-title-container {
+    display: grid;
+    grid-template-areas: "icon title";
+    grid-template-columns: 50px 1fr;
+    grid-area: title;
+    border-bottom: solid 1px var(--colour-gray-2);
+    column-gap: 1rem;
+}

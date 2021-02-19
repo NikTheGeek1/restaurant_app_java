@@ -1,0 +1,5 @@
+.header-search-bar {
+    grid-area: search-bar;
+    background-color: white;
+    border-right: 2px solid var(--colour-gray-3);
+}

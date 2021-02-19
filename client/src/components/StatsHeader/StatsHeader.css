@@ -1,0 +1,11 @@
+.stas-header-container {
+    grid-area: header;
+    display: grid;
+    grid-template-areas: "search-bar logout";
+    grid-template-columns: 1fr 15rem;
+}
+
+.header-logout-btn {
+    grid-area: logout;
+    position: relative;
+}

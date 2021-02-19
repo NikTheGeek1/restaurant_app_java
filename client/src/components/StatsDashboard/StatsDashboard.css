@@ -1,0 +1,21 @@
+.stats-dashboard-container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-areas: 
+        "navigation header"
+        "navigation main";
+
+    grid-template-columns: minmax(200px, 20%) 1fr;
+    grid-template-rows: 40px 1fr;
+    background-color: var(--colour-gray-2);
+}
+
+.stats-main-content-container {
+    margin: 2rem;
+    grid-area: main;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    grid-template-rows: min-content min-content min-content;
+    row-gap: 2rem;
+    column-gap: 2rem;
+}

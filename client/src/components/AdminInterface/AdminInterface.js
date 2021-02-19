@@ -6,7 +6,7 @@ import { getBookingsFromDate } from '../../services/booking-services';
 import { getBookingsOfSpecificHour, dateToString, getAvailableTablesOfSpecificHour } from '../../utils/bookings-utils';
 import DateSelector from '../DateSelector/DateSelector';
 import HourlyTable from '../../utils/table-utils';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import PortableModal from '../PortableModal/PortableModal';
 import DurationSelector from '../HourSelector/HourSelector';
 import Logout from '../Logout/Logout';
@@ -31,7 +31,8 @@ const AdminInterface = () => {
     const [clickedTableObj, setClickedTableObj] = useState({});
     const [pendingOrDoneBookings, setpendingOrDoneBookings] = useState('PENDING');
     const location = useLocation();
-
+    const history = useHistory();
+    
     useEffect(() => {
         if (Object.keys(portableModalPosition).length) {
             const clickedTable = specificHourBookings.filter(booking => booking.tableNum === portableModalPosition.tableNum)[0];
@@ -76,6 +77,9 @@ const AdminInterface = () => {
             <Logout user={"ADMIN"} />
             <div className="status-of-bookings-container">
                 <Button onClickHandler={toggleBookingStatus} title={pendingOrDoneBookings === "PENDING" ? "Pending Bookings" : "Done Bookings"} />
+            </div>
+            <div className="stats-dashboard-btn">
+                <Button onClickHandler={() => history.push("/admin-stats")} title="Dashboard" />
             </div>
             <RestaurantCanvas
                 bookingData={specificHourBookings}

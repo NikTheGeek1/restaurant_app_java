@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { logUserIn } from './store/actions/user-details';
 import { logAdminIn } from './store/actions/admin-details';
+import StatsDashboard from './components/StatsDashboard/StatsDashboard';
 
 import AdminInterface from './components/AdminInterface/AdminInterface';
 import CustomerInterface from './components/CustomerInterface/CustomerInterface';
@@ -44,6 +45,10 @@ function App() {
         <Route path="/" exact>
           {indexPageComponentJSX}
         </Route>
+
+        {adminLoggedIn && <Route path="/admin-stats">
+          <StatsDashboard />
+        </Route>}
       </Switch>
     </Router>
   );

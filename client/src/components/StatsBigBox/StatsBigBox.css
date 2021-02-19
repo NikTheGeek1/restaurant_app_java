@@ -1,0 +1,9 @@
+.stats-big-box {
+    background-color: var(--colour-gray-3);
+    height: 300px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 4px  rgba(0, 0, 0, .5);
+    display: grid;
+    grid-template-areas: "title title" "figure figure";
+    grid-template-rows: 50px 1fr;
+}

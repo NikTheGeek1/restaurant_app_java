@@ -1,0 +1,33 @@
+.stats-small-box {
+    background-color: var(--colour-gray-3);
+    height: 70px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 4px  rgba(0, 0, 0, .5);
+    display: grid;
+    grid-template-areas: "icon title" "icon stats";
+    grid-template-columns: 50px 1fr;
+    column-gap: 1rem;
+}
+
+.small-box-title {
+ grid-area: title;    
+ align-self: end;
+ font-size: 16px;
+}
+
+.small-box-stats {
+ grid-area: stats;
+ font-size: 30px;
+ color: var(--colour-primary);    
+}
+
+.box-icon {
+    margin-left: 1rem;
+    grid-area: icon;    
+    align-self: center;
+}
+
+.stats-icon {
+    width: 40px;
+    height: 40px;
+}

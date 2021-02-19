@@ -6,3 +6,10 @@
     top: calc( var(--canvas-start-top) - 35px );
     left: calc(var(--canvas-start-left) + 490px);
 }
+
+
+.stats-dashboard-btn {
+    position: absolute;
+    top: calc( var(--canvas-start-top) + var(--canvas-space-height) - 20px);
+    left: calc(var(--canvas-start-left) + var(--canvas-space-width) - 120px);
+}
