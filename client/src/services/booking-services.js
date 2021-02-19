@@ -37,7 +37,7 @@ export const removeBooking = (bookingId, cbSuccess, cbError) => {
         method: "DELETE",
         headers: {
             "Application": 'application/json',
-            "Content-Type": 'application/json' 
+            "Content-Type": 'application/json'
         }
     })
         .then(response => {
@@ -56,7 +56,7 @@ export const editBooking = (booking, cbSuccess, cbError) => {
         method: "PATCH",
         headers: {
             "Application": 'application/json',
-            "Content-Type": 'application/json' 
+            "Content-Type": 'application/json'
         },
         body: JSON.stringify(booking)
     })
@@ -69,3 +69,39 @@ export const editBooking = (booking, cbSuccess, cbError) => {
         })
         .catch(err => console.log(err));
 };
+
+
+export const getAllBookingsByStatus = (status, cbSuccess, cbError) => {
+    fetch(URL + `?status=${status}`)
+        .then(res => res.json())
+        .then(response => {
+            if (response.status && response.status !== 200) {
+                if (cbError) {
+                    cbError(response);
+                } else {
+                    console.log(response)
+                }
+            } else {
+                cbSuccess(response);
+            }
+        })
+        .catch(err => console.log(err));
+};
+
+export const getAllBookings = (cbSuccess, cbError) => {
+    fetch(URL)
+        .then(res => res.json())
+        .then(response => {
+            if (response.status && response.status !== 200) {
+                if (cbError) {
+                    cbError(response);
+                } else {
+                    console.log(response)
+                }
+            } else {
+                cbSuccess(response);
+            }
+        })
+        .catch(err => console.log(err));
+};
+

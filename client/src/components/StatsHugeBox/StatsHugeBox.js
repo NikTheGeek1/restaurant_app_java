@@ -1,7 +1,7 @@
 import './StatsHugeBox.css';
 import statsIcon from '../../static/images/stats-icon.png';
 
-const StatsHugeBox = ({ title, figure }) => {
+const StatsHugeBox = ({ title, children }) => {
 
     return (
         <div className="stats-huge-box">
@@ -13,7 +13,7 @@ const StatsHugeBox = ({ title, figure }) => {
                     {title}
                 </div>
             </div>
-            <div className="huge-box-figure">{figure}</div>
+            <div className="huge-box-figure">{children}</div>
         </div>
     );
 };

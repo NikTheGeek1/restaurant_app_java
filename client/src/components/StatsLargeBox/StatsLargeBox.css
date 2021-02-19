@@ -23,8 +23,13 @@
 .stats-box-title-container {
     display: grid;
     grid-template-areas: "icon title";
-    grid-template-columns: 50px 1fr;
+    grid-template-columns: 50px 1fr min-content;
     grid-area: title;
     border-bottom: solid 1px var(--colour-gray-2);
     column-gap: 1rem;
+}
+
+.stats-btns {
+    margin-right: 10px;
+    align-self: center;
 }

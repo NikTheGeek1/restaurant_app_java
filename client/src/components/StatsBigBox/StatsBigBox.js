@@ -1,7 +1,7 @@
 import './StatsBigBox.css';
 import statsIcon from '../../static/images/stats-icon.png';
 
-const StatsBigBox = ({title, startingColumn, figure}) => {
+const StatsBigBox = ({title, startingColumn, children}) => {
 
     return (
         <div className="stats-big-box" style={{gridColumn: "2/ span "+startingColumn}}>
@@ -13,7 +13,7 @@ const StatsBigBox = ({title, startingColumn, figure}) => {
                     {title}
                 </div>
             </div>
-            <div className="big-box-figure">{figure}</div>
+            <div className="big-box-figure">{children}</div>
         </div>
     );
 };

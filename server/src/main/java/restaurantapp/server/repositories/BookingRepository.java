@@ -21,6 +21,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByCustomerId(Long id);
     List<Booking> findByDate(LocalDate date);
     List<Booking> findByDateAndStatus(LocalDate date, Status status);
+    List<Booking> findByStatus(Status pending);
 
 
     @Modifying
@@ -33,4 +34,5 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                     @Param("numPeople") int numPeople, @Param("tableNum") int tableNum,
                     @Param("duration") int duration, @Param("status") Status status,
                     @Param("id") Long id);
+
 }

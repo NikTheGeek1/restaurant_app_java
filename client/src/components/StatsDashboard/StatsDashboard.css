@@ -19,3 +19,8 @@
     row-gap: 2rem;
     column-gap: 2rem;
 }
+
+.box-title {
+    text-align: center;
+    font-size: 50px;
+}

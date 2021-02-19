@@ -39,6 +39,13 @@ public class BookingController {
         if (date != null && bookingStatus != null && bookingStatus.equals("done")) {
             return new ResponseEntity<>(bookingRepository.findByDateAndStatus(date, Status.DONE), HttpStatus.OK);
         }
+        if (bookingStatus != null) {
+            if (bookingStatus.equals("PENDING")) {
+                return new ResponseEntity<>(bookingRepository.findByStatus(Status.PENDING), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(bookingRepository.findByStatus(Status.DONE), HttpStatus.OK);
+        }
+
         if (date != null) {
             return new ResponseEntity<>(bookingRepository.findByDate(date), HttpStatus.OK);
         }
