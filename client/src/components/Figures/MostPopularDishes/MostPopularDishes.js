@@ -1,22 +1,25 @@
-import './PreferredMeals.css';
-import React, { useEffect, useState } from 'react';
+import './MostPopularDishes.css';
+import React from 'react';
 import Plot from 'react-plotly.js';
+import { useEffect, useState } from 'react';
 import COLOURS from '../../../constants/COLOURS';
-import { convertFetchedDataToPlotData } from '../../../utils/figure-utils/customer-preferred-meals';
-const PreferredMeals = ({ rawCustomerData, customer }) => {
+import { convertFetchedDataToPlotData } from '../../../utils/figure-utils/popular-dishes';
+
+const MostPopularDishes = ({ rawReceiptData }) => {
     const [polishedData, setPolishedData] = useState({});
     useEffect(() => {
-        setPolishedData(convertFetchedDataToPlotData(rawCustomerData, customer));
-    }, [customer, rawCustomerData])
+        setPolishedData(convertFetchedDataToPlotData(rawReceiptData));
+    }, [rawReceiptData])
 
     let allData;
     let layout;
-    if (Object.keys(polishedData).length && customer) {
+    console.log(polishedData, 'MostPopularDishes.js', 'line: ', '16');
+    if (Object.keys(polishedData).length) {
         allData = [{
-            labels: polishedData.items,
-            values: polishedData.counts,
-            type: "pie",
-            marker: { color: COLOURS.primary }
+            x: polishedData.items,
+            y: polishedData.counts,
+            type: "bar",
+            marker: { color: COLOURS.secondary }
         }];
         layout = {
             showlegend: false,
@@ -24,17 +27,17 @@ const PreferredMeals = ({ rawCustomerData, customer }) => {
             paper_bgcolor: "#FFF3",
             autosize: true,
             xaxis: {
-                showticklabels: false,
+                // showticklabels: false,
 
                 tickfont: {
                     family: 'Old Standard TT, serif',
-                    size: 15,
+                    size: 10,
                     color: 'black'
                 },
-                tickcolor: COLOURS.secondary,
+                tickcolor: COLOURS.primary,
 
                 title: {
-                    text: 'Customers',
+                    text: 'Dishes',
                     font: {
                         family: 'Courier New, monospace',
                         size: 18,
@@ -48,7 +51,7 @@ const PreferredMeals = ({ rawCustomerData, customer }) => {
                     size: 15,
                     color: 'black'
                 },
-                tickcolor: COLOURS.secondary,
+                tickcolor: COLOURS.primary,
                 ticklen: 5,
                 tickwidth: 4,
                 title: {
@@ -63,14 +66,14 @@ const PreferredMeals = ({ rawCustomerData, customer }) => {
             margin: {
                 l: 50,
                 r: 20,
-                b: 30,
+                b: 80,
                 t: 20,
                 pad: 0
             },
         };
     }
     return (
-        <Plot 
+        <Plot
             data={allData}
             layout={layout}
             useResizeHandler={true}
@@ -79,4 +82,4 @@ const PreferredMeals = ({ rawCustomerData, customer }) => {
     );
 };
 
-export default PreferredMeals;
+export default MostPopularDishes;

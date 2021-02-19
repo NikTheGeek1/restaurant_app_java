@@ -14,6 +14,8 @@ import { useEffect, useState } from 'react';
 import { getAllBookings } from '../../services/booking-services';
 import { reRookingFactorCalculator } from '../../utils/figure-utils/re-booking-factor';
 import { calcLastMonthMoneyBookings } from '../../utils/figure-utils/last-month-money-bookings';
+import { fetchAllReceipts } from '../../services/receipt-services';
+import MostPopularDishes from '../Figures/MostPopularDishes/MostPopularDishes';
 
 const StatsDashboard = () => {
     const [bookingStatus, setBookingStatus] = useState("DONE");
@@ -26,9 +28,13 @@ const StatsDashboard = () => {
     const [allBookings, setAllBookings] = useState([]);
     const [rebookingFactor, setRebookingFactor] = useState(null);
     const [lastMonthStats, setLastMonthStats] = useState({});
+    const [rawReceiptData, setRawReceiptData] = useState([]);
+
 
     useEffect(() => {
         getAllBookings(successRes => setAllBookings(successRes));
+        fetchAllCustomers(succRes => setAllCustomers(succRes));
+        fetchAllReceipts(successRes => setRawReceiptData(successRes));
     }, []);
 
     useEffect(() => {
@@ -38,9 +44,7 @@ const StatsDashboard = () => {
         }
     }, [allBookings]);
 
-    useEffect(() => {
-        fetchAllCustomers(succRes => setAllCustomers(succRes));
-    }, []);
+
 
     useEffect(() => {
         let timer;
@@ -144,6 +148,22 @@ const StatsDashboard = () => {
                     </div>
                     <div className="large-box-figure"> <PreferredMeals rawCustomerData={allCustomers} customer={selectedCustomer}/></div>
                 </StatsLargeBox>
+                <StatsBigBox startingColumn={2}>
+                    <div className="stats-box-title-container">
+                        <div className="box-icon">
+                            <img className="stats-icon" src={statsIcon} alt="stats-icon" />
+                        </div>
+                        <div className="box-title">
+                            <h3>Popular dishes </h3>
+                        </div>
+                        <div className="stats-btns">
+                            
+                        </div>
+                    </div>
+                    <div className="big-box-figure">
+                        <MostPopularDishes  rawReceiptData={rawReceiptData} />
+                    </div>
+                </StatsBigBox>
             </div>
         </div>
     );
