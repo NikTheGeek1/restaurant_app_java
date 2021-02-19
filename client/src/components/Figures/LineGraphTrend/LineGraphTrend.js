@@ -54,7 +54,7 @@ const LineGraphTrend = ({ status }) => {
                 y: dailyBookingsTrendData.counts.filter((_, idx) => dailyBookingsTrendData.status[idx] === "DONE"),
                 type: "scatter",
                 mode: 'lines',
-                marker: { color: COLOURS.tertiary }
+                marker: { color: COLOURS.secondary }
             }];
         }
 

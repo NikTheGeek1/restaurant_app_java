@@ -7,3 +7,7 @@
     grid-template-areas: "title title" "figure figure";
     grid-template-rows: 50px 1fr;
 }
+
+.big-box-figure {
+    grid-area: figure;
+}

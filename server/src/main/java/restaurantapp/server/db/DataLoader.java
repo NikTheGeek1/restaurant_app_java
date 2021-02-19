@@ -38,7 +38,7 @@ public class DataLoader implements ApplicationRunner {
         Customer customer1 = new Customer("test1@test1.com", "123", "Nial");
         customerRepository.save(customer1);
 
-        Booking booking1 = new Booking(LocalDate.of(2021, 2, 16), LocalTime.of(6, 0), 4, customer1, 4, 120);
+        Booking booking1 = new Booking(LocalDate.of(2021, 2, 16), LocalTime.of(16, 0), 4, customer1, 4, 120);
         customer1.addBooking(booking1);
 
 //        Receipt receipt1 = new Receipt(booking1, Arrays.asList(MenuItem.SAMOSA, MenuItem.LEMON_SODA));
