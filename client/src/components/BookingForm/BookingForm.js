@@ -47,7 +47,7 @@ const BookingForm = ({ type, clickedBooking, bookingDuration, tableNum, date, ti
         <form className="booking-form-container" onSubmit={onAddBookingHandler}>
             <h3 className="booking-box-title">Booking reservation</h3>
             {formError !== '' && <h5 className="form-error-message">{formError}</h5>}
-            <FormInput value={type === "edit" ? clickedBooking.customer.email : ''} disabled={type === "edit"} onChange={setCustomerEmail} placeholder="Email" label="Email" type="email" />
+            <FormInput value={type === "edit" ? clickedBooking.customer.email : customerEmail} disabled={type === "edit"} onChange={setCustomerEmail} placeholder="Email" label="Email" type="email" />
             <FormInput value={numOfPeople} onChange={setNumOfPeople} placeholder="Number of people" label="Number of people" type="number" />
             <FormInput disabled={true} placeholder="Date" label="Date" type="date" value={date} />
             <FormInputSlider title="Duration" disabled={type === "edit"} onChange={setDuration} sliderValue={type === "edit" ? clickedBooking.duration : duration} maxValue={nearestBookingDiff < 120 ? nearestBookingDiff : 120} />

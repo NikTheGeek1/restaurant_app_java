@@ -24,7 +24,6 @@ const BarPlotPeakTimes = ({ peakTimesType }) => {
     let allData;
     let layout;
     if (Object.keys(dailyBookingsData).length) {
-        console.log(peakTimesType, 'BarPlotPeakTimes.js', 'line: ', '28');
         if (peakTimesType === "DATES") {
 
             allData = [{
@@ -63,7 +62,7 @@ const BarPlotPeakTimes = ({ peakTimesType }) => {
                 ticklen: 5,
                 tickwidth: 4,
                 title: {
-                    text: peakTimesType === "HOURS" ? 'Hours of day' : peakTimesType === "DATES" ? 'Dates' : 'Days of month',
+                    text: peakTimesType === "HOURS" ? 'Hours of day' : peakTimesType === "DATES" ? 'Days of month' : 'Days of week',
                     font: {
                         family: 'Courier New, monospace',
                         size: 18,
