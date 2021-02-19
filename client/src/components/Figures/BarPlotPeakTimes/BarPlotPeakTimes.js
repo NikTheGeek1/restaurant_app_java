@@ -1,19 +1,13 @@
 import './BarPlotPeakTimes.css';
 import React from 'react';
 import Plot from 'react-plotly.js';
-import { getAllBookings } from '../../../services/booking-services';
-
 import { useEffect, useState } from 'react';
 import { convertFetchedDataToPlotData } from '../../../utils/figure-utils/bar-plot-peak-times-utils';
 import COLOURS from '../../../constants/COLOURS';
 
-const BarPlotPeakTimes = ({ peakTimesType }) => {
-    const [rawData, setRawData] = useState({});
+const BarPlotPeakTimes = ({ peakTimesType, rawData }) => {
+    
     const [dailyBookingsData, seDailyBookingsData] = useState({});
-
-    useEffect(() => {
-        getAllBookings(successRes => setRawData(successRes));
-    }, []);
 
     useEffect(() => {
         if (Object.keys(rawData).length) {

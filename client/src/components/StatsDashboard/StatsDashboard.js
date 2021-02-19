@@ -11,7 +11,9 @@ import statsIcon from '../../static/images/stats-icon.png';
 import PreferredMeals from '../Figures/PreferredMeals/PreferredMeals';
 import { fetchAllCustomers } from '../../services/customer-services';
 import { useEffect, useState } from 'react';
-
+import { getAllBookings } from '../../services/booking-services';
+import { reRookingFactorCalculator } from '../../utils/figure-utils/re-booking-factor';
+import { calcLastMonthMoneyBookings } from '../../utils/figure-utils/last-month-money-bookings';
 
 const StatsDashboard = () => {
     const [bookingStatus, setBookingStatus] = useState("DONE");
@@ -21,6 +23,20 @@ const StatsDashboard = () => {
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const [showSearchResult, setShowSearchResult] = useState(false);
+    const [allBookings, setAllBookings] = useState([]);
+    const [rebookingFactor, setRebookingFactor] = useState(null);
+    const [lastMonthStats, setLastMonthStats] = useState({});
+
+    useEffect(() => {
+        getAllBookings(successRes => setAllBookings(successRes));
+    }, []);
+
+    useEffect(() => {
+        if (allBookings.length) {
+            setRebookingFactor(reRookingFactorCalculator(allBookings));
+            setLastMonthStats(calcLastMonthMoneyBookings(allBookings));
+        }
+    }, [allBookings]);
 
     useEffect(() => {
         fetchAllCustomers(succRes => setAllCustomers(succRes));
@@ -58,9 +74,9 @@ const StatsDashboard = () => {
         <div className="stats-dashboard-container">
             <Navigation />
             <div className="stats-main-content-container">
-                <SmallBox />
-                <SmallBox />
-                <SmallBox />
+                <SmallBox results={rebookingFactor + " days"} title="Our average customer visits us every "/>
+                <SmallBox results={lastMonthStats.bookingsNum} title="Last month's number of bookings"/>
+                <SmallBox results={"£"+lastMonthStats.totalIncome} title="Last mont's total income"/>
                 <StatsLargeBox>
                     <div className="stats-box-title-container">
                         <div className="box-icon">
@@ -96,7 +112,7 @@ const StatsDashboard = () => {
                         </div>
                     </div>
                     <div className="big-box-figure">
-                        <BarPlotPeakTimes peakTimesType={peakType} />
+                        <BarPlotPeakTimes peakTimesType={peakType} rawData={allBookings} />
                     </div>
                 </StatsBigBox>
                 <StatsHugeBox>
