@@ -16,7 +16,7 @@ const TimeSelector = ({ onTimeChange, timeValue }) => {
                 thumbClassName="example-thumb-vertical"
                 trackClassName="example-track-vertical"
                 onChange={e => onTimeChange(e)}
-                renderThumb={(props, state) => <div {...props}>{HourlyTable.getHours()[state.valueNow]}</div>}
+                renderThumb={(props, state) => <div {...props}>{HourlyTable.getHours()[state.valueNow].slice(0, 5)}</div>}
             />
         </div>
     );

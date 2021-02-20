@@ -10,11 +10,9 @@ import PortableModal from '../PortableModal/PortableModal';
 import DurationSelector from '../HourSelector/HourSelector';
 import Logout from '../Logout/Logout';
 import TimeSelector from '../TimeSelector/TimeSelector';
-import { useSelector } from 'react-redux';
-
+import MenuForCustomers from '../MenuForCustomers/MenuForCustomers';
 
 const CustomerInterface = () => {
-    const currentCustomer = useSelector(state => state.userDetails.userObj);
     const [dailyBookings, setDailyBookings] = useState([]);
     const [specificHourBookings, setSpecificHourBookings] = useState([]);
     const [availableTablesAtSpecificTime, setAvailableTablesAtSpecificTime] = useState([]);
@@ -84,6 +82,7 @@ const CustomerInterface = () => {
                 <DurationSelector onHourChange={setSelectedDuration} hourValue={selectedDuration} />
                 <TimeSelector onTimeChange={setSelectedTime} timeValue={selectedTime} />
                 <DateSelector onDateChange={setSelectedDate} dateValue={selectedDate} />
+                <MenuForCustomers />
             </div>
         </>
     );

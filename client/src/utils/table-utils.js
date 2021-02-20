@@ -149,7 +149,7 @@ class HourlyTable {
         for (let h = 0; h < 22; h++) {
             const dateOfBookings = new Date(dateAsString + " " + this.hours[h]);
             const bookings = getBookingsOfSpecificHour(dateOfBookings, duration, dailyBookings);
-            let dataInstance = { id: h, timeSlot: h % 2 === 0 ? this.hours[h] : "", selectedRow: currentSelectedTime === this.hours[h]};
+            let dataInstance = { id: h, timeSlot: h % 2 === 0 ? this.hours[h].slice(0, 5) : "", selectedRow: currentSelectedTime === this.hours[h]};
             for (let booking of bookings) {
                 dataInstance = { ...dataInstance, ["table" + booking.tableNum]: " "};
             }
@@ -157,7 +157,6 @@ class HourlyTable {
         }
         return data;
     }
-
 }
 
 export default HourlyTable;

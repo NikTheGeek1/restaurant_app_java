@@ -1,0 +1,23 @@
+.menu-for-customers-outer-container {
+    position: absolute;
+    top: var(--canvas-start-top);
+    left: calc(var(--canvas-space-width) + var(--canvas-start-left) + 2rem);
+    width: 30rem;
+    height: var(--canvas-space-height);
+}
+.menu-for-customers-inner-container {
+    background-color: var(--colour-gray-2);
+    border: 4rem solid var(--colour-gray-1);
+    border-radius: 2rem;
+    overflow-y: scroll;
+    border-style: double;
+}
+
+.menu-title {
+    position: absolute;
+    top: .4rem;
+    left: 11.5rem;
+    padding: .2rem;
+    background-color: var(--colour-secondary);
+    border-radius: 1rem;
+}
