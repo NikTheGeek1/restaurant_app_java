@@ -79,6 +79,8 @@ public class BookingController {
             bookingRepository.save(booking);
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         }
+        System.out.println(booking.getTime());
+        System.out.println(booking.getDuration());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage("Booking not available.", HttpStatus.BAD_REQUEST));
     }
 

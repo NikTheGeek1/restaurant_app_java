@@ -2,7 +2,7 @@ import './FormInputSlider.css';
 import ReactSlider from 'react-slider';
 
 const FormInputSlider = ({ sliderValue, onChange, maxValue, title, disabled }) => {
-    console.log(disabled, 'FormInputSlider.js', 'line: ', '5');
+
     return (
         <div className="form-input-container form-input-slider-container">
             <ReactSlider

@@ -66,9 +66,28 @@ export const fetchAllCustomers = (cbSuccess, cbError) => {
                 cbError(response);
             } else {
                 console.log(response)
-            }        } else {
+            }        
+        } else {
             cbSuccess(response);
         }
     })
     .catch(err => console.log(err));
+};
+
+
+export const fetchCustomerById = (id, cbSuccess, cbError) => {
+    fetch(URL + `/id?id=${id}`)
+        .then(res => res.json())
+        .then(response => {
+            if (response.status && response.status !== 200) {
+                if (cbError) {
+                    cbError(response);
+                } else {
+                    console.log(response)
+                }     
+            } else {
+                cbSuccess(response);
+            }
+        })
+        .catch(err => console.log(err));
 };

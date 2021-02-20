@@ -5,7 +5,7 @@ export const LOG_ADMIN_OUT = "LOG_ADMIN_OUT";
 
 
 export const logAdminIn = admin => {
-    storeCookie(ADMIN_LOGGED_IN, { isLoggedIn: true, adminObj: admin });
+    storeCookie(ADMIN_LOGGED_IN, "no_id");
     return { type: LOG_ADMIN_IN, customer: admin };
 };
 

@@ -20,7 +20,7 @@ function App() {
     // retrieve cookie if stored
     if (isCookie(USER_LOGGED_IN)) {
       const costumer = getCookie(USER_LOGGED_IN);
-      // dispatch(logUserIn(costumer));
+      dispatch(logUserIn(costumer));
     }
     if (isCookie(ADMIN_LOGGED_IN)) {
       const admin = getCookie(ADMIN_LOGGED_IN);

@@ -130,7 +130,8 @@ public class Booking {
             LocalTime existingBookingOffset = booking.getTime();
             LocalTime existingBookingEnd = booking.getTime().plus(Duration.ofMinutes(booking.getDuration()));
             LocalTime incomingBookingEnd = incomingBookingOffset.plus(incomingBookingDuration);
-            if (existingBookingEnd.isAfter(LocalTime.of(00, 00)) ||
+            if ((existingBookingEnd.isAfter(LocalTime.of(00, 00)) &&
+                    existingBookingEnd.isBefore(LocalTime.of(10, 00))) ||
                     existingBookingEnd.equals(LocalTime.of(00, 00))) {
                 existingBookingEnd = LocalTime.of(23, 30);
             }

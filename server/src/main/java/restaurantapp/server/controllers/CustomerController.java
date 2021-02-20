@@ -21,6 +21,11 @@ public class CustomerController {
         return new ResponseEntity<>(customerRepository.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/customers/id")
+    public ResponseEntity<Customer> customers(@RequestParam(name = "id") Long id) {
+        return new ResponseEntity<>(customerRepository.findById(id).get(), HttpStatus.OK);
+    }
+
     @PostMapping("/customers")
     public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
         List<Customer> existingCustomer = customerRepository.findByEmail(customer.getEmail());

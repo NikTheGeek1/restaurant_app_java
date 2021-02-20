@@ -1,9 +1,8 @@
 export const USER_LOGGED_IN = 'USER_LOGGED_IN';
 export const ADMIN_LOGGED_IN = 'ADMIN_LOGGED_IN';
 
-
-export const storeCookie = (cookie, cookieBody) => {
-    localStorage.setItem(cookie, cookieBody);
+export const storeCookie = (cookie, id) => {
+    localStorage.setItem(cookie, id);
 };
 
 export const removeCookie = cookie => {

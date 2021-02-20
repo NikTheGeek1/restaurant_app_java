@@ -5,17 +5,18 @@ import Button from '../Button/Button';
 import { addBookingForCustomer, editBooking } from '../../services/booking-services';
 import { useHistory } from 'react-router-dom';
 import FormInputSlider from '../FormInputSlider/FormInputSlider';
+import { useSelector } from 'react-redux';
 
 const BookingForm = ({ type, clickedBooking, bookingDuration, tableNum, date, time, hidePortableModalHandler, nearestBookingDiff }) => {
+    const customerObj = useSelector(state => state.userDetails);
     const [numOfPeople, setNumOfPeople] = useState(type === "edit" && clickedBooking.numOfPeople);
-    const [customerEmail, setCustomerEmail] = useState('');
+    const [customerEmail, setCustomerEmail] = useState(customerObj.isLoggedIn ? customerObj.userObj.email : '');
     const [formError, setFormError] = useState('')
     const [duration, setDuration] = useState(bookingDuration);
     const history = useHistory();
 
     const onAddBookingHandler = e => {
         e.preventDefault();
-
         setFormError('');
         const status = "PENDING";
         let booking = { numOfPeople, tableNum, duration, date, time, status };
@@ -40,17 +41,27 @@ const BookingForm = ({ type, clickedBooking, bookingDuration, tableNum, date, ti
 
     const handleSuccesfulResponse = response => {
         hidePortableModalHandler({});
+        console.log(time, 'BookingForm.js', 'line: ', '44');
         history.push('/', { date, time, bookingDuration });
     };
-    console.log(type, 'BookingForm.js', 'line: ', '45');
+    
+    let emailValue = customerEmail;
+    if (type === "edit") {
+        emailValue = clickedBooking.customer.email;
+    }
+    if (customerObj.isLoggedIn) {
+        emailValue = customerObj.userObj.email;
+    }
+
+
     return (
         <form className="booking-form-container" onSubmit={onAddBookingHandler}>
             <h3 className="booking-box-title">Booking reservation</h3>
             {formError !== '' && <h5 className="form-error-message">{formError}</h5>}
-            <FormInput value={type === "edit" ? clickedBooking.customer.email : customerEmail} disabled={type === "edit"} onChange={setCustomerEmail} placeholder="Email" label="Email" type="email" />
+            <FormInput value={emailValue} disabled={type === "edit" || customerObj.isLoggedIn} onChange={setCustomerEmail} placeholder="Email" label="Email" type="email" />
             <FormInput value={numOfPeople} onChange={setNumOfPeople} placeholder="Number of people" label="Number of people" type="number" />
             <FormInput disabled={true} placeholder="Date" label="Date" type="date" value={date} />
-            <FormInputSlider title="Duration" disabled={type === "edit"} onChange={setDuration} sliderValue={type === "edit" ? clickedBooking.duration : duration} maxValue={nearestBookingDiff < 120 ? nearestBookingDiff : 120} />
+            <FormInputSlider title="Duration" disabled={true} onChange={setDuration} sliderValue={type === "edit" ? clickedBooking.duration : duration} maxValue={nearestBookingDiff < 120 ? nearestBookingDiff : 120} />
             <FormInput disabled={true} placeholder="Time" label="Time" type="time" value={time} />
             <FormInput disabled={true} placeholder="Table Number" label="Table Number" type="number" value={tableNum} />
             <div className="form-btn-container">

@@ -9,14 +9,17 @@ import chairLeft from '../../assets/chair_wood_family_left [1x1].png';
 import chairRight from '../../assets/chair_wood_family_right [1x1].png';
 import chairUp from '../../assets/chair_wood_family_up [1x1].png';
 import chairDown from '../../assets/chair_wood_family_down [1x1].png';
+import { useSelector } from 'react-redux';
 
 let canvas;
 const RestaurantCanvas = ({ bookingData, isStatic, setPortableModalPosition, availableTables }) => {
+    const customerObj = useSelector(state => state.userDetails);
     const [screenDims, setScreenDims] = useState({ w: window.innerWidth, h: window.innerHeight });
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const canvasRef = useRef(null);
 
     useEffect(() => {
+    
         const canvasRefCurrent = canvasRef.current;
         const imgsArray = [
             { src: spacePNG, name: "space" },
@@ -29,6 +32,7 @@ const RestaurantCanvas = ({ bookingData, isStatic, setPortableModalPosition, ava
             { src: chairDown, name: "chairDown" }
         ];
         canvas = new Canvas(canvasRefCurrent, screenDims, imgsArray);
+        canvas.loggedInCustomer = customerObj.userObj;
         canvas.loadImagesAndStart();
     }, []);
 
@@ -57,7 +61,7 @@ const RestaurantCanvas = ({ bookingData, isStatic, setPortableModalPosition, ava
         const clickedOjb = canvas.whereWasCanvasClicked(mousePos);
         const clickedType = clickedOjb.type;
         if (clickedType !== canvas.USELESS_CLICK) {
-            setPortableModalPosition({ mousePos: mousePos, tableNum: clickedOjb.tableId });
+            setPortableModalPosition({ mousePos: mousePos, bookingId: clickedOjb.bookingId, tableNum: clickedOjb.tableNum});
         } else {
             setPortableModalPosition({});
         }

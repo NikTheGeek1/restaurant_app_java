@@ -9,8 +9,10 @@ import { removeBooking } from '../../services/booking-services';
 import BookingReceipt from '../BookingReceipt/BookingReceipt';
 import { addReceipt } from '../../services/receipt-services';
 import DoneBookingDetails from '../DoneBookingDetails/DoneBookingDetails';
+import { useSelector } from 'react-redux';
 
 const PortableModal = ({ pendingOrDone, bookingDuration, clickedBooking, position, bookingData, tableNum, bookingTime, bookingDate, hidePortableModalHandler, dayBookings }) => {
+    const customerObj = useSelector(state => state.userDetails);
     const [showAddBookingModal, setShowAddBookingModal] = useState(false);
     const [hidePortableModal, setHidePortableModal] = useState('');
     const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
@@ -71,7 +73,7 @@ const PortableModal = ({ pendingOrDone, bookingDuration, clickedBooking, positio
         <div className="not-available-table portable-modal-inner">
             <div className="option-edit-booking portable-modal-option" onClick={editBookingHandler}>Edit</div>
             <div className="option-remove-booking portable-modal-option" onClick={removeBookingHandler}>Remove</div>
-            <div className="option-get-booking-details portable-modal-option" onClick={closeBookingHandler}>Close</div>
+            {!customerObj.isLoggedIn && <div className="option-get-booking-details portable-modal-option" onClick={closeBookingHandler}>Close</div>}
         </div>
     );
     if (pendingOrDone === "DONE") {
@@ -82,6 +84,16 @@ const PortableModal = ({ pendingOrDone, bookingDuration, clickedBooking, positio
         );    
     }
 
+    const isBookingFromLoggedInCustomer = () => {
+        return clickedBooking && Object.keys(clickedBooking).length && clickedBooking.customer.email === customerObj.userObj.email;
+    };
+
+    if (customerObj.isLoggedIn) {
+        if(!isBookingFromLoggedInCustomer()) {
+            modalOptionsJSX = null;
+        }
+    }
+
     if (isTableAvailable(bookingData, tableNum)) {
         modalOptionsJSX = (
             <div className={"available-table portable-modal-inner "}>
@@ -89,6 +101,7 @@ const PortableModal = ({ pendingOrDone, bookingDuration, clickedBooking, positio
             </div>
         );
     }
+
     return (
         <div className={"portable-modal-container " + hidePortableModal} style={{ top: position.top, left: position.left }}>
             {modalOptionsJSX}
@@ -99,7 +112,7 @@ const PortableModal = ({ pendingOrDone, bookingDuration, clickedBooking, positio
                 <DeleteConfirmation title="Deleting booking - are you sure?" onDeleteConfirmed={deleteConfirmedHandler} hideModalHandler={setDeleteConfirmationModal} />
             </Modal>
             <Modal hideModalHandler={setShowEditBookingModal} showModal={showEditBookingModal}>
-                <BookingForm type={"edit"} bookingDuration={bookingDuration} clickedBooking={clickedBooking} tableNum={tableNum} date={bookingDate} time={bookingTime} hidePortableModalHandler={hidePortableModalHandler} />
+                <BookingForm type={"edit"} bookingDuration={bookingDuration} clickedBooking={clickedBooking} tableNum={tableNum} date={bookingDate} time={clickedBooking && clickedBooking.time} hidePortableModalHandler={hidePortableModalHandler} />
             </Modal>
             <Modal hideModalHandler={setShowCloseBookingModal} showModal={showCloseBookingModal}>
                 <BookingReceipt clickedBooking={clickedBooking} onSubmitReceipt={submitReceiptHandler} />
