@@ -4,7 +4,7 @@ import { getBookingsForCustomer, removeBookingFetchRemaining } from '../../servi
 import { useSelector } from 'react-redux';
 import CustomerPastBooking from '../CustomerPastBooking/CustomerPastBooking';
 import Modal from '../Modal/Modal';
-import BookingReceipt from '../BookingReceipt/BookingReceipt';
+import CustomerPastReceipt from '../CustomerPastReceipt/CustomerPastReceipt';
 
 const CustomerHistory = () => {
     const customerObj = useSelector(state => state.userDetails);
@@ -31,7 +31,7 @@ const CustomerHistory = () => {
     return (
         <div className="customer-history-container">
             <Modal hideModalHandler={setShowBookingDetailsModal} showModal={showBookingDetailsModal}>
-                <BookingReceipt clickedBooking={selectedBooking} onSubmitReceipt={() => {}} />
+                <CustomerPastReceipt clickedBooking={selectedBooking} />
             </Modal>
             {bookingsHistoryJSX}
         </div>
