@@ -101,7 +101,18 @@ public class BookingController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @DeleteMapping("/bookings/return")
+    public ResponseEntity<List<Booking>> deleteBookingsReturnRestBookings(@RequestParam(name = "bookingId") Long id) {
+        if (id != null) {
+            bookingRepository.deleteById(id);
+            return new ResponseEntity<>(bookingRepository.findAll(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(bookingRepository.findAll(), HttpStatus.BAD_REQUEST);
+    }
 
-
+    @GetMapping("/bookings/customer")
+    public ResponseEntity<List<Booking>> fetchByCustomerId(@RequestParam(name = "id") Long id) {
+        return new ResponseEntity<>(bookingRepository.findByCustomerId(id), HttpStatus.OK);
+    }
 
 }

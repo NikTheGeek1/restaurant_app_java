@@ -23,7 +23,13 @@ public class CustomerController {
 
     @GetMapping("/customers/id")
     public ResponseEntity<Customer> customers(@RequestParam(name = "id") Long id) {
-        return new ResponseEntity<>(customerRepository.findById(id).get(), HttpStatus.OK);
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        Customer customer;
+        if (customerOptional.isPresent()) {
+            customer = customerOptional.get();
+            return new ResponseEntity<>(customer, HttpStatus.OK);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/customers")

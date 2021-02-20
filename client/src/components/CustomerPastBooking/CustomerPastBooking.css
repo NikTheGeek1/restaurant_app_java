@@ -1,0 +1,64 @@
+.customer-past-booking {
+    display: grid;
+    grid-template-areas: "title" "body";
+    width: 70%;
+    border-radius: 5px;
+    box-shadow: 2px 3px 1rem rgba(0, 0, 0, .5);
+    margin-bottom: 1rem;
+}
+
+
+
+.past-booking-title {
+    grid-area: title;
+    background-image: linear-gradient(to bottom right, rgba(230, 127, 87, 0.144), rgba(226, 127, 88, .2));
+    padding: .2rem;
+    font-size: 18px;
+    font-weight: 600;
+    color: aliceblue;
+    text-align: center;
+}
+
+.past-booking-title-done {
+    grid-area: title;
+    padding: .2rem;
+    font-size: 18px;
+    font-weight: 600;
+    color: aliceblue;
+    text-align: center;
+    background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+}
+
+.past-booking-body {
+    display: grid;
+    grid-template-areas: "tableIcon tableNum" "peopleIcon peopleNum" "durationIcon duration" "remove remove";
+    grid-template-columns: 5rem 1fr;
+    align-items: end;
+    justify-items: center;
+    font-size: 18px;
+}
+
+.past-booking-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.customer-remove-past-booking {
+    margin-top: 5px;
+    grid-area: remove;
+    background-image: linear-gradient( rgba(226, 127, 88, .9), rgba(226, 127, 88, .2));
+    justify-self: stretch;
+    align-self: stretch;
+    text-align: center;
+    cursor: pointer;
+}
+
+.customer-remove-past-booking-done {
+    margin-top: 5px;
+    grid-area: remove;
+    justify-self: stretch;
+    align-self: stretch;
+    text-align: center;
+    cursor: pointer;
+    background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+}

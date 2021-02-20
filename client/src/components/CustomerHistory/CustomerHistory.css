@@ -1,0 +1,18 @@
+.customer-history-container {
+    position: absolute; 
+    top: var(--canvas-start-top);
+    left: calc( var(--canvas-space-width) + var(--canvas-start-left) + 1rem);
+    width: 20rem;
+    height: var(--canvas-space-height);
+    z-index: 1;
+    padding: 1rem 0;
+    display: grid;
+    justify-items: center;
+    grid-template-rows: repeat(auto-fit, minmax(20rem, 20rem));
+    overflow-y: scroll;
+}
+
+.booking-history-title {
+    color: aliceblue;
+
+}
