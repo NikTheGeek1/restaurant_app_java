@@ -102,12 +102,14 @@ public class BookingController {
     }
 
     @DeleteMapping("/bookings/return")
-    public ResponseEntity<List<Booking>> deleteBookingsReturnRestBookings(@RequestParam(name = "bookingId") Long id) {
-        if (id != null) {
-            bookingRepository.deleteById(id);
-            return new ResponseEntity<>(bookingRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<Booking>> deleteBookingsReturnRestBookingsOfSameCustomer(
+            @RequestParam(name = "bookingId") Long bookingId,
+            @RequestParam(name = "customerId") Long customerId) {
+        if (bookingId != null) {
+            bookingRepository.deleteById(bookingId);
+            return new ResponseEntity<>(bookingRepository.findByCustomerId(customerId), HttpStatus.OK);
         }
-        return new ResponseEntity<>(bookingRepository.findAll(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(bookingRepository.findByCustomerId(customerId), HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/bookings/customer")

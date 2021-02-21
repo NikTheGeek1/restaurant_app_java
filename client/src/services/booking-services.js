@@ -124,8 +124,8 @@ export const getBookingsForCustomer = (customerId, cbSuccess, cbError) => {
 };
 
 
-export const removeBookingFetchRemaining = (bookingId, cbSuccess, cbError) => {
-    fetch(URL + `/return?bookingId=${bookingId}`, {
+export const removeBookingFetchRemaining = (bookingId, customerId, cbSuccess, cbError) => {
+    fetch(URL + `/return?bookingId=${bookingId}&customerId=${customerId}`, {
         method: "DELETE",
         headers: {
             "Application": 'application/json',

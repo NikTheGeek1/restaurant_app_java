@@ -83,7 +83,7 @@ const CustomerInterface = () => {
                 <DurationSelector onHourChange={setSelectedDuration} hourValue={selectedDuration} />
                 <TimeSelector onTimeChange={setSelectedTime} timeValue={selectedTime} />
                 <DateSelector onDateChange={setSelectedDate} dateValue={selectedDate} />
-                <CustomerHistory />
+                <CustomerHistory dateWhichForceRerender={selectedDate}/>
                 <Chat />
             </div>
         </>
