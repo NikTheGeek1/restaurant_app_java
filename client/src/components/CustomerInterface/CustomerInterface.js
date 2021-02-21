@@ -11,6 +11,7 @@ import DurationSelector from '../HourSelector/HourSelector';
 import Logout from '../Logout/Logout';
 import TimeSelector from '../TimeSelector/TimeSelector';
 import CustomerHistory from '../CustomerHistory/CustomerHistory';
+import Chat from '../Chat/Chat';
 
 const CustomerInterface = () => {
     const [dailyBookings, setDailyBookings] = useState([]);
@@ -83,6 +84,7 @@ const CustomerInterface = () => {
                 <TimeSelector onTimeChange={setSelectedTime} timeValue={selectedTime} />
                 <DateSelector onDateChange={setSelectedDate} dateValue={selectedDate} />
                 <CustomerHistory />
+                <Chat />
             </div>
         </>
     );

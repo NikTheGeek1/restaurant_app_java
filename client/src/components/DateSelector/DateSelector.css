@@ -2,6 +2,7 @@
     position: absolute;
     top: var(--canvas-Y-end-of-space);
     left: 250px;
+    padding-bottom: 5rem;
 }
 
 .horizontal-slider {

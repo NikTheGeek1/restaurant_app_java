@@ -24,7 +24,7 @@ function App() {
     }
     if (isCookie(ADMIN_LOGGED_IN)) {
       const admin = getCookie(ADMIN_LOGGED_IN);
-      dispatch(logAdminIn(admin));
+      dispatch(logAdminIn({name: admin}));
     }
   }, []);
 

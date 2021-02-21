@@ -1,0 +1,132 @@
+.chat-container-maximised {
+    height: 300px;
+    width: 200px;
+    background-color:rgb(149, 186, 212);
+    display: grid;
+    grid-template-areas: "header" "body" "footer";
+    grid-template-rows: 40px 1fr 40px;
+    z-index: 10;
+}
+
+.chat-container-minimised {
+    align-self: end;
+    height: 40px;
+    width: 200px;
+    background-color:rgb(149, 186, 212);
+    grid-template-areas: "header";
+    grid-template-rows: 40px;
+    display: grid;
+    z-index: 10;
+}
+
+.chat-header {
+    grid-area: header;
+    background-color: rgb(149, 186, 212);
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    border-bottom: 1px solid rgb(212, 200, 200);
+}
+
+.chat-opponent-name {
+    color: white;
+    font-weight: 700;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.chat-minimize {
+    background-color: white;
+    height: 4px;
+    width: 30px;
+    margin-right: 10px;
+    margin-top: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.chat-maximise {
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.chat-body {
+    grid-area: body;
+    background-color: rgb(149, 186, 212);
+    overflow-y: scroll;
+    display: grid;
+    grid-template-rows: repeat(auto-fit, minmax(min-content, 20px));
+}
+
+.chat-footer {
+    grid-area: footer;
+    background-color: rgb(128, 166, 194);
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-input-div {
+
+}
+
+.non-read-message {
+    background-color:  rgb(128, 166, 194);
+    padding: 10px;
+    color: white;
+    font-weight: 900;
+    border-radius: 50%;
+    height: 60%;
+    margin-top: 8px;
+}
+
+.non-read-message > div{
+    margin-top: -8px;
+}
+
+.chat-input {
+    width: 100%;
+    padding: 5px 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    resize: none;
+    height: 30px;
+    min-height: 30px;
+    max-height: 100px;
+}
+
+.chat-send{
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: -5px;
+}
+
+.msg-other {
+    justify-self: start;
+    padding: 10px;
+    background-color: rgb(128, 166, 194);
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: white;
+    max-width: 150px;
+    overflow-wrap: break-word;
+}
+
+.msg-me {
+    justify-self: end;
+    padding: 10px;
+    background-color: #b2edfcff;
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: black;
+    overflow-wrap: break-word;
+    max-width: 150px;
+}

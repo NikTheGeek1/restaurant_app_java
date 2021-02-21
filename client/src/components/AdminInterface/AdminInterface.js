@@ -12,7 +12,7 @@ import DurationSelector from '../HourSelector/HourSelector';
 import Logout from '../Logout/Logout';
 import Button from '../Button/Button';
 import TimeSelector from '../TimeSelector/TimeSelector';
-
+import Chat from '../Chat/Chat';
 
 const hourlyTable = new HourlyTable();
 const BOOKING_STATUS_SWAPPER = {
@@ -20,6 +20,7 @@ const BOOKING_STATUS_SWAPPER = {
     DONE: "PENDING"
 };  
 const AdminInterface = () => {
+
     const [dailyBookings, setDailyBookings] = useState([]);
     const [specificHourBookings, setSpecificHourBookings] = useState([]);
     const [availableTablesAtSpecificTime, setAvailableTablesAtSpecificTime] = useState([]);
@@ -32,7 +33,7 @@ const AdminInterface = () => {
     const [pendingOrDoneBookings, setpendingOrDoneBookings] = useState('PENDING');
     const location = useLocation();
     const history = useHistory();
-    
+
     useEffect(() => {
         if (Object.keys(portableModalPosition).length) {
             const clickedTable = specificHourBookings.filter(booking => booking.tableNum === portableModalPosition.tableNum)[0];
@@ -103,6 +104,7 @@ const AdminInterface = () => {
                 <TimeSelector onTimeChange={setSelectedTime} timeValue={selectedTime}/>
                 <DateSelector onDateChange={setSelectedDate} dateValue={selectedDate} />
                 <HourlyAvailabilityTable data={reservedBookingsTableData} date={dateToString(selectedDate)} />
+                <Chat />
             </div>
         </>
     );

@@ -24,8 +24,8 @@ const AdminLogin = () => {
         setFormError('');
         loginAdmin(name, password,
             successResponse => {
+                dispatch(logAdminIn({name: name}));
                 history.push('/');
-                dispatch(logAdminIn(successResponse));
             },
             errorResponse => setFormError(errorResponse.message)
         );
