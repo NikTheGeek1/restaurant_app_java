@@ -19,7 +19,7 @@ const Logout = ({ user }) => {
 
     return (
         <div className="logout-btn">
-            <Button onClickHandler={logoutHandler} title="Lougout" />
+            <Button onClickHandler={logoutHandler} title="Logout" />
         </div>
     );
 };
