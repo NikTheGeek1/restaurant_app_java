@@ -26,7 +26,7 @@ const SignIn = props => {
             </View>
             <View style={styles.innerContainer}>
                 <View style={styles.emailInputContainer}>
-                    <TextInput style={styles.textInput} placeholder="Email" onChangeText={text => setEmail(text)} value={email} autoCapitalize={false} />
+                    <TextInput style={styles.textInput} placeholder="Email" onChangeText={text => setEmail(text)} value={email} autoCapitalize="none" />
                 </View>
                 <View style={styles.passwordInputContainer}>
                     <TextInput style={styles.textInput} placeholder="Password" onChangeText={text => setPassword(text)} value={password} secureTextEntry={true} />

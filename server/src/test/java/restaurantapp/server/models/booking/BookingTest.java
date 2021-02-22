@@ -8,6 +8,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -193,6 +194,70 @@ class BookingTest {
         Booking incomingBooking = new Booking(LocalDate.of(2021, 3, 10), incomingBookingOffset, 4, customer2, 3, 90);
         boolean isAvailable = Booking.isBookingAvailable(incomingBooking, bookings);
         assertTrue(isAvailable);
+    }
+
+
+
+
+    @Test
+    void shouldGetBackAllTimeSlotsAndAllTableNumsAsAvailable() {
+        HashMap<LocalTime, List<Integer>> availableSlots = Booking.getAvailableTimeSlotsGivenDateAndDuration(Arrays.asList(), LocalDate.of(2021, 4, 4), 30);
+        HashMap<LocalTime, List<Integer>> expectedOutcome = new HashMap<>();
+        expectedOutcome.put(LocalTime.of(12, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(12, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(13, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(13, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(14, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(14, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(15, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(15, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(16, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(16, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(17, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(17, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(18, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(18, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(19, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(19, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(20, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(20, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(21, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(21, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(22, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(22, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        assertEquals(expectedOutcome, availableSlots);
+    }
+
+    @Test
+    void shouldGetBackAllTimeSlotsAndAllTableNumsButTheExistingBookingTimeSlot_1() {
+        customer1 = new Customer();
+        booking1 = new Booking(LocalDate.of(2021, 4, 4), LocalTime.of(12, 00 ), 4, new Customer(), 1, 30);
+        bookings = Arrays.asList(booking1);
+        HashMap<LocalTime, List<Integer>> availableSlots = Booking.getAvailableTimeSlotsGivenDateAndDuration(bookings, LocalDate.of(2021, 4, 4), 30);
+        HashMap<LocalTime, List<Integer>> expectedOutcome = new HashMap<>();
+        expectedOutcome.put(LocalTime.of(12, 00), Arrays.asList(2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(12, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(13, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(13, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(14, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(14, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(15, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(15, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(16, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(16, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(17, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(17, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(18, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(18, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(19, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(19, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(20, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(20, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(21, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(21, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(22, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(22, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        assertEquals(expectedOutcome, availableSlots);
+    }
+
+
+    @Test
+    void shouldGetBackAllTimeSlotsAndAllTableNumsButTheExistingBookingTimeSlot_2() {
+        customer1 = new Customer();
+        booking1 = new Booking(LocalDate.of(2021, 4, 4), LocalTime.of(12, 00 ), 4, new Customer(), 1, 120);
+        bookings = Arrays.asList(booking1);
+        HashMap<LocalTime, List<Integer>> availableSlots = Booking.getAvailableTimeSlotsGivenDateAndDuration(bookings, LocalDate.of(2021, 4, 4), 30);
+        HashMap<LocalTime, List<Integer>> expectedOutcome = new HashMap<>();
+        expectedOutcome.put(LocalTime.of(12, 00), Arrays.asList(2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(12, 30), Arrays.asList(2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(13, 00), Arrays.asList(2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(13, 30), Arrays.asList(2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(14, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(14, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(15, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(15, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(16, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(16, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(17, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(17, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(18, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(18, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(19, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(19, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(20, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(20, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(21, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(21, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        expectedOutcome.put(LocalTime.of(22, 00), Arrays.asList(1,2,3,4,5,6,7,8)); expectedOutcome.put(LocalTime.of(22, 30), Arrays.asList(1,2,3,4,5,6,7,8));
+        assertEquals(expectedOutcome, availableSlots);
     }
 
 

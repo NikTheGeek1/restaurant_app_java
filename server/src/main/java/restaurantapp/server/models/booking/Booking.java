@@ -8,6 +8,9 @@ import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -136,12 +139,12 @@ public class Booking {
                 existingBookingEnd = LocalTime.of(23, 30);
             }
             if ((incomingBookingOffset.isAfter(existingBookingOffset) &&
-                                    incomingBookingOffset.isBefore(existingBookingEnd))
-               ||   (incomingBookingEnd.isAfter(existingBookingOffset) &&
-                                    incomingBookingEnd.isBefore(existingBookingEnd))
-               || (incomingBookingOffset.isBefore(existingBookingOffset) &&
+                    incomingBookingOffset.isBefore(existingBookingEnd))
+                    ||   (incomingBookingEnd.isAfter(existingBookingOffset) &&
+                    incomingBookingEnd.isBefore(existingBookingEnd))
+                    || (incomingBookingOffset.isBefore(existingBookingOffset) &&
                     incomingBookingEnd.isAfter(existingBookingEnd))
-               ||   (incomingBookingOffset.equals(existingBookingOffset))){
+                    ||   (incomingBookingOffset.equals(existingBookingOffset))){
                 return false; // available = false
             }
         }
@@ -173,5 +176,39 @@ public class Booking {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public static List<LocalTime> getTimeSlots() {
+        List<LocalTime> timeSlots = Arrays.asList(
+                LocalTime.of(12, 00), LocalTime.of(12, 30),
+                LocalTime.of(13, 00), LocalTime.of(13, 30),
+                LocalTime.of(14, 00), LocalTime.of(14, 30),
+                LocalTime.of(15, 00), LocalTime.of(15, 30),
+                LocalTime.of(16, 00), LocalTime.of(16, 30),
+                LocalTime.of(17, 00), LocalTime.of(17, 30),
+                LocalTime.of(18, 00), LocalTime.of(18, 30),
+                LocalTime.of(19, 00), LocalTime.of(19, 30),
+                LocalTime.of(20, 00), LocalTime.of(20, 30),
+                LocalTime.of(21, 00), LocalTime.of(21, 30),
+                LocalTime.of(22, 00), LocalTime.of(22, 30));
+        return timeSlots;
+    }
+
+    public static HashMap<LocalTime, List<Integer>> getAvailableTimeSlotsGivenDateAndDuration(
+            List<Booking> existingBookings,
+            LocalDate date,
+            int duration)
+    {
+        List<Integer> tableNums = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8);
+        HashMap<LocalTime, List<Integer>> availableTimeSlots = new HashMap<>();
+        for (LocalTime possibleTime : getTimeSlots()) {
+            for (Integer possibleTableNum : tableNums) {
+                Booking possibleBooking = new Booking(date, possibleTime, 4, new Customer(), possibleTableNum, duration);
+                if (isBookingAvailable(possibleBooking, existingBookings)){
+                        availableTimeSlots.computeIfAbsent(possibleTime, k -> new ArrayList<>()).add(possibleTableNum);
+                }
+            }
+        }
+        return availableTimeSlots;
     }
 }

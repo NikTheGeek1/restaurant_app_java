@@ -131,7 +131,24 @@ export const removeBookingFetchRemaining = (bookingId, customerId, cbSuccess, cb
             "Content-Type": 'application/json'
         }
     })
-    .then(res => res.json())
+        .then(res => res.json())
+        .then(response => {
+            if (response.status && response.status !== 200 && !response.id) {
+                if (cbError) {
+                    cbError(response);
+                } else {
+                    console.log(response)
+                }
+            } else {
+                cbSuccess(response);
+            }
+        })
+        .catch(err => console.log(err));
+};
+
+export const getAvailableBookingsGivenDateAndDuration = (date, duration, cbSuccess, cbError) => {
+    fetch(URL + `/reservation-bookings?date=${date}&duration=${duration}`)
+        .then(res => res.json())
         .then(response => {
             if (response.status && response.status !== 200 && !response.id) {
                 if (cbError) {

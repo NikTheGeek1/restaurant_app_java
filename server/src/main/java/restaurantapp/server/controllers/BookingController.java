@@ -12,6 +12,8 @@ import restaurantapp.server.repositories.BookingRepository;
 import restaurantapp.server.repositories.CustomerRepository;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +54,17 @@ public class BookingController {
         return new ResponseEntity<>(bookingRepository.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/bookings/reservation-bookings")
+    public ResponseEntity<HashMap<LocalTime, List<Integer>>> getAvailableSlotsOfDate(
+            @RequestParam(name = "date")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(name = "duration") Integer duration
+    ) {
+        List<Booking> existingBookings = bookingRepository.findByDate(date);
+        HashMap<LocalTime, List<Integer>> availableSlots = Booking.getAvailableTimeSlotsGivenDateAndDuration(existingBookings, date, duration);
+        return new ResponseEntity<>(availableSlots, HttpStatus.OK);
+    }
+
     @PostMapping("/bookings")
     public ResponseEntity<?> addBooking(@RequestBody Booking booking) {
         List<Booking> existingBookings = bookingRepository.findAll();
@@ -90,7 +103,6 @@ public class BookingController {
         bookingRepository.updateById(updatedBooking.getDate(), updatedBooking.getTime(), updatedBooking.getNumOfPeople(), updatedBooking.getTableNum(), updatedBooking.getDuration(), updatedBooking.getStatus(), updatedBooking.getId());
         return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
     }
-
 
     @DeleteMapping("/bookings")
     public ResponseEntity<Void> deleteBooking(@RequestParam(name = "bookingId") Long id) {
