@@ -1,9 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { removeBooking } from '../services/booking-services';
-import peopleNumIcon from '../static/images/people-number.png';
-import tableNumIcon from '../static/images/table-number.png';
-import durationIcon from '../static/images/durations.png';
+import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import COLOURS from '../constants/COLOURS';
 
 import { countItems } from '../utils/receipts-utils';
@@ -15,20 +11,37 @@ const CustomerPastReceipt = ({ route }) => {
     for (const item in orderCounter) {
         const qty = orderCounter[item];
         menuItemsJSX.push(
-            <View key={item}>
-                <Text>{item}</Text>
-                <Text>{qty}</Text>
+            <View style={styles.itemContainer} key={item}>
+                <Text style={styles.itemText}>{item} x{qty}</Text>
+
             </View>
         );
-    }   
+    }
 
     return (
-        <ScrollView>
-            <Text>Menu Items</Text>
+        <View style={styles.container}>
             {menuItemsJSX}
-            <Text >Total: £{route.params.totalCost}</Text>
-        </ScrollView>
+            <View style={styles.totalTextContainer}>
+                <Text style={styles.totalText} >Total: £{route.params.totalCost}</Text>
+            </View>
+        </View>
     );
 };
 
+const styles = StyleSheet.create({
+    container: { flex: 1, alignItems: 'center', justifyContent: "center" },
+    itemContainer: {
+        backgroundColor: COLOURS.gray3,
+        flexDirection: "column",
+        width: 200,
+        justifyContent: 'center',
+        marginBottom: 2
+    },
+    itemText: {},
+    qtyText: {},
+    menuTitle: { fontSize: 25 },
+    menuTitleContainer: {},
+    totalText: {textAlign: "left"},
+    totalTextContainer: { borderTopColor: COLOURS.gray1, borderTopWidth: 2, width: 200 }
+});
 export default CustomerPastReceipt;
