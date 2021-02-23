@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getBookingsForCustomer } from '../services/booking-services';
 import CustomerPastBooking from '../components/CustomerPastBooking';
+import { sortBookingByDate } from '../utils/sort-dates-util';
 
 const UserBookings = ({ navigation, route}) => {
     const user = useSelector(state => state.userDetails.userObj);
@@ -17,7 +18,7 @@ const UserBookings = ({ navigation, route}) => {
         return unsubscribe;
       }, [navigation, myBookings]);
 
-    const bookingsJSX = myBookings.map(booking => {
+    const bookingsJSX = sortBookingByDate(myBookings, 'desc').map(booking => {
         return (
             <CustomerPastBooking key={booking.id} booking={booking} setMyBookings={setMyBookings} navigation={navigation}/>
         );

@@ -1,4 +1,6 @@
-const URL = "http://localhost:8080/bookings";
+// const URL = "http://localhost:8080/bookings";
+const URL = "http://192.168.1.6:8080/bookings";
+
 export const getBookingsFromDate = (date, status, cbSuccess, cbError) => {
     fetch(URL + `?date=${date}&status=${status}`)
         .then(res => res.json())
