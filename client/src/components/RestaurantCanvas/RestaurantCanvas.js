@@ -14,7 +14,6 @@ import { useSelector } from 'react-redux';
 let canvas;
 const RestaurantCanvas = ({ bookingData, isStatic, setPortableModalPosition, availableTables }) => {
     const customerObj = useSelector(state => state.userDetails);
-    const [screenDims, setScreenDims] = useState({ w: window.innerWidth, h: window.innerHeight });
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const canvasRef = useRef(null);
 
@@ -31,7 +30,7 @@ const RestaurantCanvas = ({ bookingData, isStatic, setPortableModalPosition, ava
             { src: chairUp, name: "chairUp" },
             { src: chairDown, name: "chairDown" }
         ];
-        canvas = new Canvas(canvasRefCurrent, screenDims, imgsArray);
+        canvas = new Canvas(canvasRefCurrent, { w: 700, h: 600 }, imgsArray);
         canvas.loggedInCustomer = customerObj.userObj;
         canvas.loadImagesAndStart();
     }, []);
@@ -48,11 +47,9 @@ const RestaurantCanvas = ({ bookingData, isStatic, setPortableModalPosition, ava
 
     useEffect(() => {
         canvas.canvas.addEventListener('mousemove', updateMousePos);
-        window.addEventListener('resize', resizeScreen);
         canvas.canvas.addEventListener('click', onCanvasClick);
         return () => {
             canvas.canvas.removeEventListener('mousemove', updateMousePos);
-            window.removeEventListener('resize', resizeScreen);
             canvas.canvas.removeEventListener('click', onCanvasClick);
         };
     });
@@ -65,13 +62,6 @@ const RestaurantCanvas = ({ bookingData, isStatic, setPortableModalPosition, ava
         } else {
             setPortableModalPosition({});
         }
-    };
-
-    const resizeScreen = () => {
-        // const w = window.innerWidth;
-        // const h = window.innerHeight;
-        // setScreenDims({ w, h });
-        // canvas.resizeScreen(w, h);
     };
 
     const updateMousePos = e => {
@@ -88,7 +78,7 @@ const RestaurantCanvas = ({ bookingData, isStatic, setPortableModalPosition, ava
         <>
             <div style={{ position: "absolute", top: 0, left: 0, zIndex: 1, color: "white", fontSize: 40 }}>{mousePos.x}, {mousePos.y}</div>
             {isStatic && <div className="static-overlay-canvas"></div>}
-            <canvas ref={canvasRef} className={isStatic ? "restaurant-canvas static-canvas" : "restaurant-canvas"} height={screenDims.h} width={screenDims.w} />
+            <canvas ref={canvasRef} className={isStatic ? "restaurant-canvas static-canvas" : "restaurant-canvas"} height="600px" width="800px" />
         </>
     );
 };
