@@ -2,14 +2,14 @@ import Backdrop from '../Backdrop/Backdrop';
 import './Modal.css';
 import ReactDOM from 'react-dom';
 
-const Modal = ({ showModal, children, hideModalHandler, type }) => {
+const Modal = ({ showModal, children, hideModalHandler, type, hidePortableModalHandler }) => {
     if (!showModal) {
         return <> </>;
     }
 
     const ModalJSX = (
         <>
-            <Backdrop hideModalHandler={hideModalHandler}>
+            <Backdrop hideModalHandler={hideModalHandler} hidePortableModalHandler={hidePortableModalHandler && hidePortableModalHandler}>
                 <div className="modal-container" onClick={e => e.stopPropagation()}>{children}</div>
             </Backdrop>
         </>

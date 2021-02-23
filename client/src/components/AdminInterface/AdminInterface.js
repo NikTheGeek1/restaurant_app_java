@@ -90,6 +90,7 @@ const AdminInterface = () => {
                 {!!Object.keys(portableModalPosition).length && <PortableModal
                     pendingOrDone={pendingOrDoneBookings}
                     hidePortableModalHandler={setPortableModalPosition}
+                    setClickedTableObj={setClickedTableObj}
                     clickedBooking={clickedTableObj}
                     position={{ top: portableModalPosition.mousePos.y, left: portableModalPosition.mousePos.x }}
                     tableNum={portableModalPosition.tableNum}

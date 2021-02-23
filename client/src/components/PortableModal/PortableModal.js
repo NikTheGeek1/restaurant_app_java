@@ -105,19 +105,19 @@ const PortableModal = ({ pendingOrDone, bookingDuration, clickedBooking, positio
     return (
         <div className={"portable-modal-container " + hidePortableModal} style={{ top: position.top, left: position.left }}>
             {modalOptionsJSX}
-            <Modal hideModalHandler={setShowAddBookingModal} showModal={showAddBookingModal}>
+            <Modal hideModalHandler={setShowAddBookingModal} showModal={showAddBookingModal} hidePortableModalHandler={hidePortableModalHandler} >
                 <BookingForm bookingDuration={bookingDuration} nearestBookingDiff={nearestBookingDiff} tableNum={tableNum} date={bookingDate} time={bookingTime} hidePortableModalHandler={hidePortableModalHandler} />
             </Modal>
-            <Modal hideModalHandler={setDeleteConfirmationModal} showModal={deleteConfirmationModal}>
+            <Modal hideModalHandler={setDeleteConfirmationModal} showModal={deleteConfirmationModal} hidePortableModalHandler={hidePortableModalHandler} >
                 <DeleteConfirmation title="Deleting booking - are you sure?" onDeleteConfirmed={deleteConfirmedHandler} hideModalHandler={setDeleteConfirmationModal} />
             </Modal>
-            <Modal hideModalHandler={setShowEditBookingModal} showModal={showEditBookingModal}>
+            <Modal hideModalHandler={setShowEditBookingModal} showModal={showEditBookingModal} hidePortableModalHandler={hidePortableModalHandler} >
                 <BookingForm type={"edit"} bookingDuration={bookingDuration} clickedBooking={clickedBooking} tableNum={tableNum} date={bookingDate} time={clickedBooking && clickedBooking.time} hidePortableModalHandler={hidePortableModalHandler} />
             </Modal>
-            <Modal hideModalHandler={setShowCloseBookingModal} showModal={showCloseBookingModal}>
+            <Modal hideModalHandler={setShowCloseBookingModal} showModal={showCloseBookingModal} hidePortableModalHandler={hidePortableModalHandler} >
                 <BookingReceipt clickedBooking={clickedBooking} onSubmitReceipt={submitReceiptHandler} />
             </Modal>
-            <Modal hideModalHandler={setShowDoneBookingDetailsModal} showModal={showDoneBookingDetailsModal}>
+            <Modal hideModalHandler={setShowDoneBookingDetailsModal} showModal={showDoneBookingDetailsModal} hidePortableModalHandler={hidePortableModalHandler} >
                 <CustomerPastReceipt clickedBooking={clickedBooking}/>
             </Modal>
         </div>

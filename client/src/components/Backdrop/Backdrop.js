@@ -1,9 +1,10 @@
 import { Children } from 'react';
 import './Backdrop.css';
 
-const Backdrop = ({ children, hideModalHandler }) => {
+const Backdrop = ({ children, hideModalHandler, hidePortableModalHandler }) => {
     
     const hideModal = () => {
+        hidePortableModalHandler && hidePortableModalHandler({});
         hideModalHandler(false);
     };
 
