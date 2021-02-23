@@ -1,12 +1,9 @@
 .stats-dashboard-container {
     min-height: 100vh;
+    min-width: 1400px;
     display: grid;
-    grid-template-areas: 
-        "navigation main"
-        "navigation main";
-
-    grid-template-columns: minmax(150px, 200px) 1fr;
-    grid-template-rows: 40px 1fr;
+    grid-template-areas: "navigation main";
+    grid-template-columns: minmax(min-content, 200px) minmax(1200px, 1fr);
     background-color: var(--colour-gray-2);
 }
 
@@ -14,7 +11,7 @@
     margin: 2rem;
     grid-area: main;
     display: grid;
-    grid-template-columns: repeat(3, minmax(310px, 1fr));
+    grid-template-columns: repeat(3, minmax(min-content, 1fr));
     grid-template-rows: min-content min-content min-content;
     row-gap: 2rem;
     column-gap: 2rem;
