@@ -36,10 +36,9 @@ const AdminInterface = () => {
 
     useEffect(() => {
         if (Object.keys(portableModalPosition).length) {
-            const clickedTable = specificHourBookings.filter(booking => booking.tableNum === portableModalPosition.tableNum)[0];
+            const clickedTable = specificHourBookings.filter(booking => booking.id === portableModalPosition.bookingId)[0];
             setClickedTableObj(clickedTable);
         }
-
     }, [portableModalPosition]);
 
     useEffect(() => {

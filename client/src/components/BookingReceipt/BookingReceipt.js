@@ -25,7 +25,7 @@ const BookingReceipt = ({ clickedBooking, onSubmitReceipt }) => {
                 key={item.realName}
                 itemName={item.prettyName}
                 qty_onChange={(e) => changeItemQuantityHandler(e, item.realName)}
-                qty_value={itemCount[item.realName]}
+                qty_value={itemCount[item.realName] }
             />
         );
     });

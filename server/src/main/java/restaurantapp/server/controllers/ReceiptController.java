@@ -30,7 +30,6 @@ public class ReceiptController {
 
     @PostMapping("/receipts")
     public ResponseEntity<Receipt> addReceipt(@RequestBody Receipt receipt) {
-        System.out.println(receipt);
         Booking updatedBooking = receipt.getBooking();
         updatedBooking.setReceipt(receipt);
         bookingRepository.updateById(updatedBooking.getDate(), updatedBooking.getTime(), updatedBooking.getNumOfPeople(), updatedBooking.getTableNum(), updatedBooking.getDuration(), updatedBooking.getStatus(), updatedBooking.getId());

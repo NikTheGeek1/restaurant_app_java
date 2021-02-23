@@ -217,7 +217,7 @@ class Canvas {
             earliestBookingTime = new Date(bookingsOnTable[0].date + " " + bookingsOnTable[0].time);
             for (const booking of bookingsOnTable) {
                 const bookingTime = new Date(booking.date + " " + booking.time);
-                if (!earliestBookingTime < bookingTime) {
+                if (earliestBookingTime > bookingTime) {
                     earliestBookingTime = bookingTime;
                     earliestBookingId = booking.id;
                 }

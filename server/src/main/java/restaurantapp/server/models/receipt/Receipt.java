@@ -16,7 +16,7 @@ public class Receipt {
 
     @OneToOne
     @JoinColumn(name = "booking_id", nullable = false)
-    @JsonIgnoreProperties({"receipt"})
+    @JsonIgnoreProperties(value = "receipt", allowSetters = true)
     private Booking booking;
 
     @ElementCollection

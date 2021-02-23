@@ -5,7 +5,7 @@ import COLOURS from '../constants/COLOURS';
 import { countItems } from '../utils/receipts-utils';
 
 const CustomerPastReceipt = ({ route }) => {
-    console.log(route.params, 'OrderDetails.js', 'line: ', '12');
+
     const menuItemsJSX = [];
     const orderCounter = countItems(route.params.order);
     for (const item in orderCounter) {
@@ -13,7 +13,6 @@ const CustomerPastReceipt = ({ route }) => {
         menuItemsJSX.push(
             <View style={styles.itemContainer} key={item}>
                 <Text style={styles.itemText}>{item} x{qty}</Text>
-
             </View>
         );
     }

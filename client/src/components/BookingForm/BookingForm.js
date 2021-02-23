@@ -41,7 +41,6 @@ const BookingForm = ({ type, clickedBooking, bookingDuration, tableNum, date, ti
 
     const handleSuccesfulResponse = response => {
         hidePortableModalHandler({});
-        console.log(time, 'BookingForm.js', 'line: ', '44');
         history.push('/', { date, time, bookingDuration });
     };
     
