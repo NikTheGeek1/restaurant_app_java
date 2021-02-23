@@ -11,6 +11,7 @@
     display: grid;
     grid-template-areas: "title menu-icon";
     border-bottom: solid 1px;
+    column-gap: 1rem;
     padding-bottom: 1rem;
 }
 

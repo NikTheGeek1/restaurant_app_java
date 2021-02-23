@@ -4,11 +4,17 @@
     display: grid;
     justify-items: center;
     align-items: center;
+    background-image: linear-gradient(rgba(0, 0, 0, .8) 40%, rgba(0, 0, 0, .1) 100%), url(../../static/images/background.jpg);
+    background-size: cover;
+    padding-top: 250px;
+    
 }
 
 .customer-admin-login-btns {
     display: grid;
     height: 100%;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: "customer-box" "admin-box";
+    grid-template-rows: 1fr ;
+    grid-template-areas: "customer-box admin-box";
+    column-gap: 100px;
+
 }

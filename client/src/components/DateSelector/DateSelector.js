@@ -1,5 +1,5 @@
 import './DateSelector.css';
-import 'react-calendar/dist/Calendar.css';
+import './Calendar.css';
 // import ReactSlider from 'react-slider';
 // import HourlyTable from '../../utils/table-utils';
 

@@ -1,9 +1,9 @@
 .stats-dashboard-container {
     min-height: 100vh;
-    min-width: 1400px;
+    min-width: 1420px;
     display: grid;
     grid-template-areas: "navigation main";
-    grid-template-columns: minmax(min-content, 200px) minmax(1200px, 1fr);
+    grid-template-columns: 230px minmax(1200px, 1fr);
     background-color: var(--colour-gray-2);
 }
 

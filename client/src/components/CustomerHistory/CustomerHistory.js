@@ -6,6 +6,7 @@ import CustomerPastBooking from '../CustomerPastBooking/CustomerPastBooking';
 import Modal from '../Modal/Modal';
 import CustomerPastReceipt from '../CustomerPastReceipt/CustomerPastReceipt';
 import { useHistory } from 'react-router-dom';
+import { sortDates } from '../../utils/sort-dates-util';
 
 const CustomerHistory = ({ dateWhichForceRerender }) => {
     const customerObj = useSelector(state => state.userDetails);
@@ -27,7 +28,7 @@ const CustomerHistory = ({ dateWhichForceRerender }) => {
             setShowBookingDetailsModal(true);
         }
     };
-    const bookingsHistoryJSX = customersHistory.map(booking => {
+    const bookingsHistoryJSX = sortDates(customersHistory, 'desc').map(booking => {
         return <CustomerPastBooking key={booking.id} booking={booking} onClickBooking={clickBookingHandler} />;
     });
 

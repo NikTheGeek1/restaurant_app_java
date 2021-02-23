@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { removeBooking } from '../../services/booking-services';
 import BookingReceipt from '../BookingReceipt/BookingReceipt';
 import { addReceipt } from '../../services/receipt-services';
-import DoneBookingDetails from '../DoneBookingDetails/DoneBookingDetails';
+import CustomerPastReceipt from '../CustomerPastReceipt/CustomerPastReceipt';
 import { useSelector } from 'react-redux';
 
 const PortableModal = ({ pendingOrDone, bookingDuration, clickedBooking, position, bookingData, tableNum, bookingTime, bookingDate, hidePortableModalHandler, dayBookings }) => {
@@ -118,7 +118,7 @@ const PortableModal = ({ pendingOrDone, bookingDuration, clickedBooking, positio
                 <BookingReceipt clickedBooking={clickedBooking} onSubmitReceipt={submitReceiptHandler} />
             </Modal>
             <Modal hideModalHandler={setShowDoneBookingDetailsModal} showModal={showDoneBookingDetailsModal}>
-                <DoneBookingDetails clickedBooking={clickedBooking}/>
+                <CustomerPastReceipt clickedBooking={clickedBooking}/>
             </Modal>
         </div>
     );

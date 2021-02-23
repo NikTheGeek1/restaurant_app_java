@@ -12,7 +12,7 @@ const CustomerBox = () => {
 
     return (
         <div className="customer-box">
-            <h1 className="customer-title-landing-page">Are you a customer?</h1>
+            <h1 className="customer-title-landing-page">Customer</h1>
             <div className="customer-register-btn">
                 <Button title="Register" onClickHandler={setShowUserLoginModal.bind(true)}/>
                 <Modal showModal={showUserLoginModal} hideModalHandler={setShowUserLoginModal}>

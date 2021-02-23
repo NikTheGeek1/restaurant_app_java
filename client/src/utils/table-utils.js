@@ -1,3 +1,4 @@
+import COLOURS from '../constants/COLOURS';
 import { getBookingsOfSpecificHour } from './bookings-utils';
 
 class HourlyTable {
@@ -7,22 +8,30 @@ class HourlyTable {
         this.data = [];
         this.CELL_WIDTH = "30px";
         this.customStyleUnavailable = {
-            backgroundColor: '#44beac',
-            borderLeft: "6px solid white",
-            borderRight: "6px solid white",
+            backgroundColor: '#aaa',
+            borderLeft: "6px solid #aaa",
+            borderRight: "6px solid #aaa",
+            '&::after': {
+                content: "'o'",
+                color: "green",
+                display: "block",
+                fontWeight: "800",
+                fontSize: "16px"
+            },
             '&:hover': {
                 cursor: 'pointer',
             },
         };
         this.customStyleAvailable = {
-            backgroundColor: 'white',
-            borderLeft: "6px solid white",
-            borderRight: "6px solid white",
+            backgroundColor: "#aaa",
+            borderLeft: "6px solid #aaa",
+            borderRight: "6px solid #aaa",
             '&::after': {
                 content: "'x'",
-                color: "#e27f58",
+                color: "red",
                 display: "block",
-                fontWeight: "800"
+                fontWeight: "800",
+                fontSize: "16px"
             },
             '&:hover': {
                 cursor: 'pointer',

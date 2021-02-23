@@ -10,6 +10,9 @@
 .user-registration-box-title {
     justify-self: center;
     margin-bottom: 1.5rem;
+    color: aliceblue;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 .form-error-message {

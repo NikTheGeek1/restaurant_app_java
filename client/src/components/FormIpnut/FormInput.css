@@ -1,5 +1,6 @@
 .form-input-container {
     justify-self: center;
+    margin-bottom: 1rem;
 }
 
 
@@ -34,12 +35,13 @@
     border-bottom: 3px solid var(--colour-primary);
 }
 .form-label {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: 700;
     margin-left: 2rem;
-    margin-top: .7rem;
+    margin-top: .4rem;
     display: block;
     transition: all .3s;
+    color: aliceblue;
 }
 
 .form-input:placeholder-shown + .form-label {

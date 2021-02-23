@@ -1,13 +1,43 @@
 .time-selector-container {
     position: absolute;
-    top: calc(var(--canvas-start-top) + 90px);
-    left: calc(var(--canvas-start-left) - 60px);
-    height: 300px;
-    width: 3px;
+    top: calc(var(--canvas-Y-end-of-space) - 5px);
+    left: 250px;
+    width: 350px;
 }
 
 
+.horizontal-slider {
+    cursor: pointer;
+    background-color: red;
+    color: black;
+    margin-bottom: 20px;
+}
 
+.example-thumb {
+    cursor: pointer;
+    width: 60px;
+    height: 20px;
+    margin-top: -10px;
+    background-color: var(--colour-primary);
+    text-align: center;
+    border-radius: 10px;
+}
+
+
+.example-track {
+    cursor: pointer;
+    background-color: var(--colour-gray-3);
+    height: 2px;
+}
+
+.example-mark {
+    width: 10px;
+    height: 10px;
+    background-color: var(--colour-secondary);
+    margin-top: -5px;
+}
+
+/* 
 .vertical-slider {
     height: 100%;
     width: 100%;
@@ -39,4 +69,4 @@
     height: 10px;
     background-color: var(--colour-secondary);
     margin-top: -5px;
-}
+} */

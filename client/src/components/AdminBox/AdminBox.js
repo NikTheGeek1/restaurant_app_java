@@ -9,7 +9,7 @@ const AdminBox = () => {
 
     return (
         <div className="admin-box">
-            <h1 className="admin-title-landing-page">Are you an admin?</h1>
+            <h1 className="admin-title-landing-page">Admin</h1>
             <div className="admin-login-btn">
                 <Button title="Login" onClickHandler={setShowAdminLoginModal.bind(true)} />
                 <Modal showModal={showAdminLoginModal} hideModalHandler={setShowAdminLoginModal}>

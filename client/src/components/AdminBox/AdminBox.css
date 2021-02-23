@@ -1,14 +1,16 @@
 
 .admin-box {
-    background-image: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5));
-    height: 50%;
+    background-image: linear-gradient(rgba(255, 255, 255, .1), rgba(255, 255, 255, .1));
+    height: 150px;
     grid-area: admin-box;
     display: grid;
+    width: 300px;
     grid-template-areas: "title" "btn-login";
     color: var(--colour-white);
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     border-radius: 1rem;
-    align-self: center;
+    align-self: flex-start;
+    text-align: center;
 }
 
 .admin-login-btn {

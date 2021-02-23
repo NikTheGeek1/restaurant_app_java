@@ -1,3 +1,10 @@
 .admin-registration-box-title {
     margin-bottom: 1rem;
+    color: aliceblue;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.admin-login-form-container {
+    display: grid;
 }
