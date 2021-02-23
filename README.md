@@ -1,3 +1,5 @@
+(admin's password: 12345)
+
 ## Restaurant Booking System:
 
 This a booking system for a restaurant. The restaurant needs a way to book and arrange tables for customers who whant to book. This system is for the staff and the customers to use.
