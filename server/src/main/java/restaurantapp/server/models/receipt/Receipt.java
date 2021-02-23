@@ -71,7 +71,7 @@ public class Receipt {
         this.id = id;
     }
 
-    private Double calculateTotalCost() {
+    public Double calculateTotalCost() {
         Double total = 0.0;
         for (MenuItem item : order) {
             total += item.getPrice();

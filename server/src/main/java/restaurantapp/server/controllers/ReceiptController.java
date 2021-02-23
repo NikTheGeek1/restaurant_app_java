@@ -31,6 +31,7 @@ public class ReceiptController {
     @PostMapping("/receipts")
     public ResponseEntity<Receipt> addReceipt(@RequestBody Receipt receipt) {
         Booking updatedBooking = receipt.getBooking();
+        receipt.setTotalCost(receipt.calculateTotalCost());
         updatedBooking.setReceipt(receipt);
         bookingRepository.updateById(updatedBooking.getDate(), updatedBooking.getTime(), updatedBooking.getNumOfPeople(), updatedBooking.getTableNum(), updatedBooking.getDuration(), updatedBooking.getStatus(), updatedBooking.getId());
         receiptRepository.save(receipt);
