@@ -68,17 +68,17 @@ const RestaurantCanvas = ({ bookingData, isStatic, setPortableModalPosition, ava
     };
 
     const resizeScreen = () => {
-        const w = window.innerWidth;
-        const h = window.innerHeight;
-        setScreenDims({ w, h });
-        canvas.resizeScreen(w, h);
+        // const w = window.innerWidth;
+        // const h = window.innerHeight;
+        // setScreenDims({ w, h });
+        // canvas.resizeScreen(w, h);
     };
 
     const updateMousePos = e => {
         const rect = canvas.canvas.getBoundingClientRect();
         // const root = document.documentElement;
-        const x = e.clientX - rect.left;// - root.scrollLeft;
-        const y = e.clientY - rect.top;// - root.scrollTop;
+        const x = Math.round(e.clientX - rect.left);// - root.scrollLeft;
+        const y = Math.round(e.clientY - rect.top);// - root.scrollTop;
         setMousePos({ x, y });
         canvas.updateMousePos(x, y);
         canvas.changeCursorPointer();
