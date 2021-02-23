@@ -76,9 +76,9 @@ const RestaurantCanvas = ({ bookingData, isStatic, setPortableModalPosition, ava
 
     const updateMousePos = e => {
         const rect = canvas.canvas.getBoundingClientRect();
-        const root = document.documentElement;
-        const x = e.clientX - rect.left - root.scrollLeft;
-        const y = e.clientY - rect.top - root.scrollTop;
+        // const root = document.documentElement;
+        const x = e.clientX - rect.left;// - root.scrollLeft;
+        const y = e.clientY - rect.top;// - root.scrollTop;
         setMousePos({ x, y });
         canvas.updateMousePos(x, y);
         canvas.changeCursorPointer();
