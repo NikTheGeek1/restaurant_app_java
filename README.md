@@ -1,6 +1,6 @@
 ## Restaurant Booking System:
 
-You have been tasked to create a booking system for a brand new restaurant. The restaurant needs a way to book and arrange tables for customers who are booking over the phone. This system is for the staff to use.
+This a booking system for a restaurant. The restaurant needs a way to book and arrange tables for customers who whant to book. This system is for the staff and the customers to use.
 
 ### MVP:
 
