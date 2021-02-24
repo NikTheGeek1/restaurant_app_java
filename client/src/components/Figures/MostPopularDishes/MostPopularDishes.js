@@ -13,7 +13,7 @@ const MostPopularDishes = ({ rawReceiptData }) => {
 
     let allData;
     let layout;
-    console.log(polishedData, 'MostPopularDishes.js', 'line: ', '16');
+
     if (Object.keys(polishedData).length) {
         allData = [{
             x: polishedData.items,

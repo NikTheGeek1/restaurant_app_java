@@ -52,7 +52,7 @@ const Chat = () => {
         let greetingSubscription;
         let broadcastSub;
         let activeUsersSubscription;
-        // socket.debug = f => f;
+        socket.debug = f => f;
         websckLogUserIn(whoAmI.obj.name, whoAmI.userType,
             sucResp => socket.connect({ username: whoAmI.obj.name }, (frame) => {
                 activeUsersSubscription = socket.subscribe('/topic/active', (userObjectsUnParsed) => {
