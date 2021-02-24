@@ -1,1 +1,2 @@
-// commands for deploying only branch to heroku
+// commands for deploying subfolder of branch to heroku
+git subtree push --prefix server heroku production-build:main
