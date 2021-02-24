@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import LandingPage from './components/LandingPage/LandingPage';
-import { isCookie, getCookie, USER_LOGGED_IN, ADMIN_LOGGED_IN } from './local-storage-utils/cookies-utils';
+import { isCookie, getCookie, USER_LOGGED_IN, ADMIN_LOGGED_IN, removeCookie } from './local-storage-utils/cookies-utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { logUserIn } from './store/actions/user-details';
@@ -30,7 +30,8 @@ function App() {
 
   let indexPageComponentJSX = <LandingPage />;
   if (userLoggedIn && adminLoggedIn) {
-    throw new Error("Both customer and admin are loggged in, do something");
+    removeCookie(USER_LOGGED_IN);
+    removeCookie(ADMIN_LOGGED_IN);
   }
   if (userLoggedIn) {
     indexPageComponentJSX = <CustomerInterface />;
