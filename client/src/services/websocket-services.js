@@ -1,4 +1,4 @@
-const URL = "http://localhost:8080/websck";
+const URL = "http://restaurant-cc.herokuapp.com/websck";
 
 export const websckLogUserIn = (userName, userType, cbSuccess) => {
     fetch(URL+`/user-connect?userName=${userName}&userType=${userType}`, {

@@ -1,4 +1,4 @@
-const URL = "http://localhost:8080/customers";
+const URL = "http://restaurant-cc.herokuapp.com/customers";
 
 export const registerCustomer = (customer, cbSuccess, cbError) => {
     fetch(URL, {

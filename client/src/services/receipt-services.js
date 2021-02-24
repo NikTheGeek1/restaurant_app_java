@@ -1,4 +1,4 @@
-const URL = "http://localhost:8080/receipts";
+const URL = "http://restaurant-cc.herokuapp.com/receipts";
 
 export const addReceipt = (receipt, cbSuccess, cbError) => {
     fetch(URL, {

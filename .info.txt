@@ -1,2 +1,16 @@
+// postgresql db and heroku
+database didn't need configuration when app deployed to heroku. It was done automatically? 
+
 // commands for deploying subfolder of branch to heroku
-git subtree push --prefix server heroku production-build:main
+git subtree push --prefix server heroku master
+git push heroku master (while in the appropriate branch)
+
+// deploying to firebase
+add: "deploy": "npm run build && firebase deploy" to packages.json
+go to firebase -> console -> create project
+firebase init 
+hosting
+existing project
+build
+don't overwite index.html
+the others optional

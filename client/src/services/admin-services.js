@@ -1,4 +1,4 @@
-const URL = "http://localhost:8080/admin";
+const URL = "http://restaurant-cc.herokuapp.com/admin";
 
 export const loginAdmin = (name, password, cbSuccess, cbError) => {
     fetch(URL + `/login?name=${name}&password=${password}`, {

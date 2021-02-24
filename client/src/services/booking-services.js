@@ -1,4 +1,4 @@
-const URL = "http://localhost:8080/bookings";
+const URL = "http://restaurant-cc.herokuapp.com/bookings";
 export const getBookingsFromDate = (date, status, cbSuccess, cbError) => {
     fetch(URL + `?date=${date}&status=${status}`)
         .then(res => res.json())

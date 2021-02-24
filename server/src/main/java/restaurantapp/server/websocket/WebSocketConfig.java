@@ -21,11 +21,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/broadcast");
         registry.addEndpoint("/broadcast")
-                .setAllowedOrigins("http://localhost:3000")
+                .setAllowedOrigins("https://restaurant-c.web.app")
                 .withSockJS()
                 .setHeartbeatTime(60_000);
         registry.addEndpoint("/chat")
-                .setAllowedOrigins("http://localhost:3000")
+                .setAllowedOrigins("https://restaurant-c.web.app")
                 .withSockJS();
     }
 
