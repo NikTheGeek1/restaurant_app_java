@@ -3,18 +3,24 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import LandingPage from './components/LandingPage/LandingPage';
 import { isCookie, getCookie, USER_LOGGED_IN, ADMIN_LOGGED_IN, removeCookie } from './local-storage-utils/cookies-utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { logUserIn } from './store/actions/user-details';
 import { logAdminIn } from './store/actions/admin-details';
+import { herokuWarmUpFetch } from './services/heroku-server-warm-up';
 import StatsDashboard from './components/StatsDashboard/StatsDashboard';
-
+import HerokuFallback from './components/HerokuFallback/HerokuFallback';
 import AdminInterface from './components/AdminInterface/AdminInterface';
 import CustomerInterface from './components/CustomerInterface/CustomerInterface';
 
 function App() {
   const dispatch = useDispatch();
   const userLoggedIn = useSelector(state => state.userDetails.isLoggedIn);
+  const [isHerokuReady, setIsHerokuReady] = useState(false);
   const adminLoggedIn = useSelector(state => state.adminDetails.isLoggedIn);
+
+  useEffect(() => {
+    herokuWarmUpFetch(() => setIsHerokuReady(true));
+  }, []);
 
   useEffect(() => {
     // retrieve cookie if stored
@@ -42,15 +48,19 @@ function App() {
 
   return (
     <Router>
-      <Switch>
-        <Route path="/" exact>
-          {indexPageComponentJSX}
-        </Route>
+      { isHerokuReady ? (
+        <Switch>
+          <Route path="/" exact>
+            {indexPageComponentJSX}
+          </Route>
 
-        {adminLoggedIn && <Route path="/admin-stats">
-          <StatsDashboard />
-        </Route>}
-      </Switch>
+          {adminLoggedIn && <Route path="/admin-stats">
+            <StatsDashboard />
+          </Route>}
+        </Switch>
+      ) :
+        <HerokuFallback />
+      }
     </Router>
   );
 }
