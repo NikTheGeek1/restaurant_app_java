@@ -1,5 +1,5 @@
-// const URL = "http://localhost:8080/customers";
-const URL = "http://192.168.1.6:8080/customers";
+const URL = "http://localhost:8080/customers"; // mac
+// const URL = "http://192.168.1.3:8080/customers"; // phone
 
 export const registerCustomer = (customer, cbSuccess, cbError) => {
     fetch(URL, {

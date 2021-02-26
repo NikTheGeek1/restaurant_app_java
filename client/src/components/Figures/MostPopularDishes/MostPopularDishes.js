@@ -55,7 +55,7 @@ const MostPopularDishes = ({ rawReceiptData }) => {
                 ticklen: 5,
                 tickwidth: 4,
                 title: {
-                    text: 'Bookings',
+                    text: 'Orders',
                     font: {
                         family: 'Courier New, monospace',
                         size: 18,
