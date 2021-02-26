@@ -2,7 +2,7 @@
 database didn't need configuration when app deployed to heroku. It was done automatically? 
 
 // commands for deploying subfolder of branch to heroku
-git subtree push --prefix server heroku production-build
+git subtree push --prefix server heroku main
 git push heroku master (while in the appropriate branch)
 
 // deploying to firebase

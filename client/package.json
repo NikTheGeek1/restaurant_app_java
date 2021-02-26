@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "deploy": "npm run build && firebase deploy",
+    "deploy": "source ~/.bash_profile && npm run build && firebase deploy",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
