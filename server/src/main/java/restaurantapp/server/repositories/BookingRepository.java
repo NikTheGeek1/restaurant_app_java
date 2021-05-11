@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import restaurantapp.server.models.booking.Booking;
 import restaurantapp.server.models.booking.Status;
 
-import java.awt.print.Book;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
