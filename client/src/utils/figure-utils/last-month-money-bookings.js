@@ -1,7 +1,7 @@
 
 
 export const calcLastMonthMoneyBookings = bookings => {
-    const thisMonth = new Date().getMonth();
+    const thisMonth = new Date().getMonth()-1;
     const thisYear = new Date().getYear();
 
     let totalIncome = 0;
